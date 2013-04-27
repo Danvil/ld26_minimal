@@ -42,10 +42,17 @@ public class BlobManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// remove dead
-		foreach(Living x in blobsLife.Where(x => x.IsDead && x.gameObject != Globals.Player.gameObject)) {
+		Living[] dels = blobsLife
+			.Where(x => x.IsDead && x.gameObject != Globals.Player.gameObject)
+			.ToArray();
+		foreach(Living x in dels) {
+			blobsLife.Remove(x);
+			BlobMove bm = x.GetComponent<BlobMove>();
+			if(bm) {
+				blobsMove.Remove(bm);
+			}
 			Object.Destroy(x.gameObject);
 		}
-		blobsLife.RemoveAll(x => x.IsDead);
 	}
 
 }
