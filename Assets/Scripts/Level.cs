@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Level : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Level : MonoBehaviour
 	int[,] levelPlan;
 	
 	int[,] level;
+	
+	public Vector3[] BlockedCells { get; private set; }
 	
 	public Vector3 PlayerStart { get; private set; }
 	
@@ -58,7 +61,7 @@ public class Level : MonoBehaviour
 			|| IsBlocking(v + new Vector3(0,-r,0))
 			|| IsBlocking(v + new Vector3(0,+r,0));
 	}
-
+	
 	void PlanLevel()
 	{
 		// 0 = free, 1 = blocked
@@ -121,7 +124,8 @@ public class Level : MonoBehaviour
 	}
 	
 	void GenerateLevel()
-	{
+	{	
+		List<Vector3> blockedcells = new List<Vector3>();
 		level = new int[levelPlan.GetLength(0), levelPlan.GetLength(1)];
 		for(int y=0; y<level.GetLength(0); y++) {
 			for(int x=0; x<level.GetLength(1); x++) {
@@ -129,6 +133,9 @@ public class Level : MonoBehaviour
 				Vector3 pos = new Vector3(0.5f + (float)x, 0.5f + (float)y, 0.0f);
 				// blocking
 				level[y,x] = (q == 1 ? 1 : 0);
+				if(q == 1) {
+					blockedcells.Add(pos);
+				}
 				// coin
 				if(q == 7) {
 					GameObject go = (GameObject)Instantiate(pfCoin);
@@ -147,6 +154,7 @@ public class Level : MonoBehaviour
 				}
 			}
 		}
+		BlockedCells = blockedcells.ToArray();
 	}
 
 	void Awake()

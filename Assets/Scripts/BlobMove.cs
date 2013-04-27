@@ -4,8 +4,11 @@ using System.Linq;
 public class BlobMove : MonoBehaviour {
 
 	const float cSpeedMaxBoost = 1.2f;
+	const float cAvoidStrengthPlayer = 1.0f;
 	const float cAvoidStrengthOther = 0.5f;
 	const float cAvoidStrengthLevel = 0.5f;
+	const float cAvoidStrengthBombs = 3.5f;
+	const float cBombAvoidRadius = 1.0f;
 	const float cRotationMixStrength = 0.5f;
 	
 	public float size = 0.3f;
@@ -16,16 +19,21 @@ public class BlobMove : MonoBehaviour {
 
 	public bool hasGoal { get; private set; }
 	public Vector3 goal { get; private set; }
-	public float goalTime { get; private set; }
+	
+	public float PlayerMinDistance = 0.0f;
 	
 	public void SetGoal(Vector3 goal)
 	{
 		this.goal = goal;
-		this.goalTime = MyTime.time;
 		this.hasGoal = true;
 	}
+	
+	public void DisableGoal()
+	{
+		this.hasGoal = false;
+	}
 
-	bool isGoalReached() {
+	public bool isGoalReached() {
 		return (transform.position - goal).magnitude < goalTolerance;
 	}
 
@@ -77,6 +85,19 @@ public class BlobMove : MonoBehaviour {
 		return 1.0f / (z*z);
 	}
 
+	// avoid player
+	Vector3 computeAvoidPlayer() {
+		Vector3 player_pos = Globals.Player.transform.position;
+		Vector3 delta = player_pos - transform.position;
+		float dist = delta.magnitude;
+		if(dist < PlayerMinDistance) {
+			return - avoidFalloff(dist, PlayerMinDistance) * delta.normalized;
+		}
+		else {
+			return Vector3.zero;
+		}
+	}
+
 	// avoid other
 	Vector3 computeAvoidOther() {
 		Vector3 force = Vector3.zero;
@@ -88,40 +109,45 @@ public class BlobMove : MonoBehaviour {
 		return force;
 	}
 
+	// avoid bombs
+	Vector3 computeAvoidBombs() {
+		Vector3 force = Vector3.zero;
+		foreach(Bomb x in Globals.BombManager.GetBombs()) { // FIXME reduce range
+			Vector3 delta = x.transform.position - transform.position;
+			float d_min = this.size + cBombAvoidRadius;
+			force -= avoidFalloff(delta.magnitude, 0.5f*d_min) * delta.normalized;
+		}
+		return force;
+	}
+
 	// avoid level
 	Vector3 computeAvoidLevel() {
-		float size_this = this.size;
 		Vector3 force = Vector3.zero;
-		float x = this.transform.position.x;
-		float y = this.transform.position.y;
-		// FIXME
-//		force += avoidFalloff(x - Globals.LevelRect.xMin, size_this) * new Vector3(1,0,0);
-//		force += avoidFalloff(Globals.LevelRect.xMax - x, size_this) * new Vector3(-1,0,0);
-//		force += avoidFalloff(y - Globals.LevelRect.yMin, size_this) * new Vector3(0,1,0);
-//		force += avoidFalloff(Globals.LevelRect.yMax - y, size_this) * new Vector3(0,-1,0);
-/*		Debug.DrawLine(new Vector3(Globals.LevelRect.xMin, Globals.LevelRect.yMin, -1.0f),
-					   new Vector3(Globals.LevelRect.xMax, Globals.LevelRect.yMin, -1.0f));
-		Debug.DrawLine(new Vector3(Globals.LevelRect.xMin, Globals.LevelRect.yMax, -1.0f),
-					   new Vector3(Globals.LevelRect.xMax, Globals.LevelRect.yMax, -1.0f));
-		Debug.DrawLine(new Vector3(Globals.LevelRect.xMin, Globals.LevelRect.yMin, -1.0f),
-					   new Vector3(Globals.LevelRect.xMin, Globals.LevelRect.yMax, -1.0f));
-		Debug.DrawLine(new Vector3(Globals.LevelRect.xMax, Globals.LevelRect.yMin, -1.0f),
-					   new Vector3(Globals.LevelRect.xMax, Globals.LevelRect.yMax, -1.0f));
-*/		return force;
+		Vector3 pos = this.transform.position.WithChangedZ(0.0f);
+		foreach(Vector3 bc in Globals.Level.BlockedCells) {
+			Vector3 delta = pos - bc;
+			force += avoidFalloff(delta.magnitude, this.size) * delta.normalized;
+		}
+		return force;
 	}
 	
+	Vector3 moveFollow;
+	Vector3 movePlayer;
+	Vector3 moveAvoid;
+	Vector3 moveLevel;
+	Vector3 moveBombs;
+
 	// Update is called once per frame
 	void Update () {
 		if(isGoalReached()) {
 			hasGoal = false;
 		}
-		Vector3 moveFollow = speed * computeGoalFollow().normalized;
-		Vector3 moveAvoid = cAvoidStrengthOther * computeAvoidOther();
-		Vector3 moveLevel = cAvoidStrengthLevel * computeAvoidLevel();
-		Vector3 move = moveFollow + moveAvoid + moveLevel;
-		Debug.DrawRay(this.transform.position, moveFollow, Color.red);
-		Debug.DrawRay(this.transform.position, moveAvoid, Color.green);
-		Debug.DrawRay(this.transform.position, moveLevel, Color.blue);
+		moveFollow = speed * computeGoalFollow().normalized;
+		movePlayer = cAvoidStrengthPlayer * computeAvoidPlayer();
+		moveAvoid = cAvoidStrengthOther * computeAvoidOther();
+		moveLevel = cAvoidStrengthLevel * computeAvoidLevel();
+		moveBombs = cAvoidStrengthBombs * computeAvoidBombs();
+		Vector3 move = moveFollow + movePlayer + moveAvoid + moveLevel + moveBombs;
 		// some randomness
 		move += MyTime.deltaTime * 0.05f * MoreMath.RandomInsideUnitCircle3;
 		move.WithChangedZ(0.0f);
@@ -145,6 +171,11 @@ public class BlobMove : MonoBehaviour {
 		if(hasGoal) {
 			Gizmos.color = Color.blue;
 			Gizmos.DrawLine(transform.position, goal);
+			Debug.DrawRay(this.transform.position, movePlayer, new Color(1.0f, 0.5f, 0.0f));
+			Debug.DrawRay(this.transform.position, moveFollow, Color.blue);
+			Debug.DrawRay(this.transform.position, moveAvoid, Color.green);
+			Debug.DrawRay(this.transform.position, moveLevel, Color.cyan);
+			Debug.DrawRay(this.transform.position, moveBombs, Color.red);
 		}
 	}
 	

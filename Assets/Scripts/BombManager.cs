@@ -10,9 +10,13 @@ public struct ExplosionSite
 
 public class BombManager : MonoBehaviour {
 	
+	const float THROW_VEL = 4.3f;
+	
 	public GameObject pfBomb;
 
 	List<ExplosionSite> explosions = new List<ExplosionSite>();
+	
+	List<Bomb> bombs = new List<Bomb>();
 	
 	void Awake()
 	{
@@ -39,20 +43,26 @@ public class BombManager : MonoBehaviour {
 		}
 	}
 	
+	public Bomb[] GetBombs() {
+		return bombs.ToArray();
+	}
+	
 	public ExplosionSite[] GetExplosions() {
 		return explosions.ToArray();
 	}
 	
-	public void ThrowBomb(Vector3 start, Vector3 vel)
+	public void ThrowBomb(Vector3 start, Vector3 target)
 	{
 		GameObject go = (GameObject)Instantiate(pfBomb);
 		go.transform.parent = this.transform;
 		go.transform.position = start;
-		go.rigidbody.velocity = vel;
+		go.rigidbody.velocity = (target - start).normalized * THROW_VEL;
+		bombs.Add(go.GetComponent<Bomb>());
 	}
 	
 	public void ExplodeBomb(Bomb bomb)
 	{
+		bombs.Remove(bomb);
 		// mark explosion sight
 		ExplosionSite site = new ExplosionSite();
 		site.position = bomb.transform.position;

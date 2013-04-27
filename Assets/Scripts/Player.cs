@@ -4,7 +4,6 @@ using System.Collections;
 public class Player : MonoBehaviour {
 	
 	const float SHOOT_TIMEOUT = 1.0f;
-	const float THROW_VEL = 4.3f;
 	const float PLAYER_RADIUS = 0.2f;
 	const float PLAYER_VELOCITY = 2.53f;
 	
@@ -14,10 +13,16 @@ public class Player : MonoBehaviour {
 	
 	public Living living { get; private set; }
 	
-	// Use this for initialization
-	void Start () {
-		living = GetComponent<Living>();
+	void Awake()
+	{
 		Globals.Player = this;
+	}
+	
+	// Use this for initialization
+	void Start()
+	{
+		Globals.BlobManager.AddBlob(gameObject);
+		living = GetComponent<Living>();
 		// position player
 		this.transform.position = new Vector3(
 			Globals.Level.PlayerStart.x,
@@ -59,14 +64,8 @@ public class Player : MonoBehaviour {
 			Ray ray = Globals.MainCamera.ScreenPointToRay(Input.mousePosition); 
 			Vector3 target = ray.GetPoint(- ray.origin.z / ray.direction.z);
 			Vector3 start = this.transform.position + new Vector3(0,0,-.8f);
-			Vector3 dir = (target - start).normalized;
-			Globals.BombManager.ThrowBomb(start, THROW_VEL*dir);
+			Globals.BombManager.ThrowBomb(start, target);
 		}
-	}
-	
-	void Awake()
-	{
-		Globals.BlobManager.AddBlob(gameObject);
 	}
 	
 	// Update is called once per frame
