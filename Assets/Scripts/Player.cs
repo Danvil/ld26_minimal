@@ -18,36 +18,36 @@ public class Player : MonoBehaviour {
 	void Start () {
 		living = GetComponent<Living>();
 		Globals.Player = this;
+		// position player
+		this.transform.position = new Vector3(
+			Globals.Level.PlayerStart.x,
+			Globals.Level.PlayerStart.y,
+			this.transform.position.z);
 	}
 	
 	void Move()
 	{
 		// move with keyboard
-		float D = PLAYER_VELOCITY * MyTime.deltaTime;
-		Vector3 newpos = this.transform.position;
+		Vector3 movedir = Vector3.zero;
 		if(Input.GetKey(KeyCode.A)) {
-			newpos += new Vector3(-D,0,0);
+			movedir += new Vector3(-1,0,0);
 		}
 		if(Input.GetKey(KeyCode.D)) {
-			newpos += new Vector3(+D,0,0);
+			movedir += new Vector3(+1,0,0);
 		}
 		if(Input.GetKey(KeyCode.W)) {
-			newpos += new Vector3(0,+D,0);
+			movedir += new Vector3(0,+1,0);
 		}
 		if(Input.GetKey(KeyCode.S)) {
-			newpos += new Vector3(0,-D,0);
+			movedir += new Vector3(0,-1,0);
 		}
-//		Vector3 dir = newpos - this.transform.position;
-//		RaycastHit[] info = rigidbody.SweepTestAll(dir.normalized, dir.magnitude);
-//		bool hits = false;
-//		foreach(RaycastHit h in info) {
-//			if(h.point.z > 0.5) {
-//				hits = true;
-//			}
-//		}
-//		if(!hits) {
-			this.transform.position = newpos;
-//		}
+		if(movedir.magnitude > 0.0f) {
+			movedir = movedir.normalized * PLAYER_VELOCITY * MyTime.deltaTime;
+			Vector3 newpos = this.transform.position + movedir;
+			if(!Globals.Level.IsBlocking(newpos, PLAYER_RADIUS)) {
+				this.transform.position = newpos;
+			}
+		}
 	}
 	
 	void Shoot()
@@ -73,10 +73,8 @@ public class Player : MonoBehaviour {
 			MyTime.Pause = true;
 		}
 		// move camera
-		Globals.MainCamera.transform.position = new Vector3(
-			0.5f*this.transform.position.x,
-			0.5f*this.transform.position.y,
-			Globals.MainCamera.transform.position.z);
+		Vector3 campos = Globals.Level.LevelCenter + 0.4f*(this.transform.position - Globals.Level.LevelCenter);
+		Globals.MainCamera.transform.position = new Vector3(campos.x, campos.y, Globals.MainCamera.transform.position.z);
 	}
 	
 	void PickupCoin(Coin coin)

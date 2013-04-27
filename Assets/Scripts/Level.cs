@@ -9,14 +9,24 @@ public class Level : MonoBehaviour
 	
 	int[,] level;
 	
+	public Vector3 PlayerStart { get; private set; }
+	
+	public Vector3 LevelCenter {
+		get {
+			return new Vector3(0.5f * (float)level.GetLength(1), 0.5f * (float)level.GetLength(0), 0.0f);
+		}
+	}
+	
 	public bool IsFree(int x, int y)
 	{
-		return level[y,x] == 0;
+		return 0 <= x && x < level.GetLength(1)
+			&& 0 <= y && y < level.GetLength(0)
+ 			&& level[y,x] == 0;
 	}
 	
 	public bool IsBlocking(int x, int y)
 	{
-		return level[y,x] != 0;
+		return !IsFree(x,y);
 	}
 	
 	public bool IsBlocking(Vector3 v)
@@ -24,6 +34,15 @@ public class Level : MonoBehaviour
 		return IsBlocking((int)v.x, (int)v.y);
 	}
 	
+	public bool IsBlocking(Vector3 v, float r)
+	{
+		return IsBlocking(v + new Vector3(0,0,0))
+			|| IsBlocking(v + new Vector3(-r,0,0))
+			|| IsBlocking(v + new Vector3(+r,0,0))
+			|| IsBlocking(v + new Vector3(0,-r,0))
+			|| IsBlocking(v + new Vector3(0,+r,0));
+	}
+
 	void GenerateLevel()
 	{
 		level = new int[6,10] {
@@ -34,6 +53,7 @@ public class Level : MonoBehaviour
 			{0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0},
 		};
+		PlayerStart = new Vector3(0.5f,0.5f,0);
 	}
 		
 	void GenerateLevelVisuals()
@@ -79,8 +99,6 @@ public class Level : MonoBehaviour
 			// }
 		}
 		
-		this.transform.position = - new Vector3(((float)cols)*0.5f, ((float)rows)*0.5f, 0.0f);
-
 	}
 
 	void GenerateCoins()
