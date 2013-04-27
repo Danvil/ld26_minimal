@@ -7,7 +7,7 @@ public class Globals : MonoBehaviour {
 
 	static public BombManager BombManager;
 
-	static public LivingManager LivingManager;
+	static public BlobManager BlobManager;
 
 	static public Player Player;
 	

@@ -21,6 +21,18 @@ public class Level : MonoBehaviour
 		}
 	}
 	
+	public bool IsPathBlocked(Vector3 a, Vector3 b)
+	{
+		a = new Vector3(a.x, a.y, -0.5f);
+		b = new Vector3(b.x, b.y, -0.5f);
+		Vector3 d = b - a;
+		Ray ray = new Ray(a, d.normalized);
+		RaycastHit hitInfo;
+		return Collider.Raycast(ray, out hitInfo, d.magnitude);
+	}
+	
+	public Collider Collider { get; private set; }
+	
 	public bool IsFree(int x, int y)
 	{
 		return 0 <= x && x < level.GetLength(1)
@@ -66,7 +78,8 @@ public class Level : MonoBehaviour
 	{
 		Mesh mesh = LevelMesh.Create(level);
 		GetComponent<MeshFilter>().mesh = mesh;
-		GetComponent<MeshCollider>().sharedMesh = mesh;		
+		GetComponent<MeshCollider>().sharedMesh = mesh;	
+		this.Collider = GetComponent<MeshCollider>();
 	}
 
 	void GenerateLights()

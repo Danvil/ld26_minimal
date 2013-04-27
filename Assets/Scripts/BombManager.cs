@@ -30,7 +30,7 @@ public class BombManager : MonoBehaviour {
 	
 	void DamageLiving(ExplosionSite site)
 	{
-		foreach(Living x in Globals.LivingManager.GetLivings()) {
+		foreach(Living x in Globals.BlobManager.GetLifeBehaviours()) {
 			float d = (x.transform.position - site.position).magnitude;
 			float dmg = Mathf.Max(0.0f, 12.0f / (1.0f + 1.5f*d*d) - 1.0f);
 			if(dmg > 0) {

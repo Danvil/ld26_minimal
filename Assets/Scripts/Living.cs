@@ -31,7 +31,6 @@ public class Living : MonoBehaviour {
 	void Start () {
 		IsDead = false;
 		Health = HealthMax;
-		Globals.LivingManager.Add(this);
 	}
 	
 	// Update is called once per frame

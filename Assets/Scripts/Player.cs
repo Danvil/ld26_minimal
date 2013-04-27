@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
 
 	public AudioClip[] audioCoin;
 	
-	Living living;
+	public Living living { get; private set; }
 	
 	// Use this for initialization
 	void Start () {
@@ -62,6 +62,11 @@ public class Player : MonoBehaviour {
 			Vector3 dir = (target - start).normalized;
 			Globals.BombManager.ThrowBomb(start, THROW_VEL*dir);
 		}
+	}
+	
+	void Awake()
+	{
+		Globals.BlobManager.AddBlob(gameObject);
 	}
 	
 	// Update is called once per frame
