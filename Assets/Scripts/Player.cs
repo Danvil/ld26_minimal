@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
 	const float SHOOT_TIMEOUT = 1.0f;
 	const float THROW_VEL = 4.3f;
 	const float PLAYER_RADIUS = 0.2f;
+	const float PLAYER_VELOCITY = 2.53f;
 	
 	float shootTimeout = 0;
 
@@ -22,8 +23,7 @@ public class Player : MonoBehaviour {
 	void Move()
 	{
 		// move with keyboard
-		const float V = 1.83f;
-		float D = V * MyTime.deltaTime;
+		float D = PLAYER_VELOCITY * MyTime.deltaTime;
 		Vector3 newpos = this.transform.position;
 		if(Input.GetKey(KeyCode.A)) {
 			newpos += new Vector3(-D,0,0);
