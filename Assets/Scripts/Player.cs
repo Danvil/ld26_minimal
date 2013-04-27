@@ -5,6 +5,7 @@ public class Player : MonoBehaviour {
 	
 	const float SHOOT_TIMEOUT = 1.0f;
 	const float THROW_VEL = 4.3f;
+	const float PLAYER_RADIUS = 0.2f;
 	
 	float shootTimeout = 0;
 	
@@ -16,24 +17,40 @@ public class Player : MonoBehaviour {
 		Globals.Player = this;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		shootTimeout -= MyTime.deltaTime;
+	void Move()
+	{
 		// move with keyboard
 		const float V = 1.83f;
 		float D = V * MyTime.deltaTime;
+		Vector3 newpos = this.transform.position;
 		if(Input.GetKey(KeyCode.A)) {
-			this.transform.Translate(new Vector3(-D,0,0));
+			newpos += new Vector3(-D,0,0);
 		}
 		if(Input.GetKey(KeyCode.D)) {
-			this.transform.Translate(new Vector3(+D,0,0));
+			newpos += new Vector3(+D,0,0);
 		}
 		if(Input.GetKey(KeyCode.W)) {
-			this.transform.Translate(new Vector3(0,+D,0));
+			newpos += new Vector3(0,+D,0);
 		}
 		if(Input.GetKey(KeyCode.S)) {
-			this.transform.Translate(new Vector3(0,-D,0));
+			newpos += new Vector3(0,-D,0);
 		}
+//		Vector3 dir = newpos - this.transform.position;
+//		RaycastHit[] info = rigidbody.SweepTestAll(dir.normalized, dir.magnitude);
+//		bool hits = false;
+//		foreach(RaycastHit h in info) {
+//			if(h.point.z > 0.5) {
+//				hits = true;
+//			}
+//		}
+//		if(!hits) {
+			this.transform.position = newpos;
+//		}
+	}
+	
+	void Shoot()
+	{
+		shootTimeout -= MyTime.deltaTime;
 		// shoot and aim with mouse
 		if(Input.GetButton("Fire1") && shootTimeout <= 0) {
 			shootTimeout = SHOOT_TIMEOUT;
@@ -43,6 +60,12 @@ public class Player : MonoBehaviour {
 			Vector3 dir = (target - start).normalized;
 			Globals.BombManager.ThrowBomb(start, THROW_VEL*dir);
 		}
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		Move();
+		Shoot();
 		// stop time if dead
 		if(living.IsDead) {
 			MyTime.Pause = true;

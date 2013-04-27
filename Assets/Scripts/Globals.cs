@@ -10,6 +10,8 @@ public class Globals : MonoBehaviour {
 	static public LivingManager LivingManager;
 
 	static public Player Player;
+	
+	static public Level Level;
 
 	void Awake() {
 		MainCamera = GetComponentInChildren<Camera>();

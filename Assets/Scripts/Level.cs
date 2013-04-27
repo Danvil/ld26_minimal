@@ -7,6 +7,16 @@ public class Level : MonoBehaviour
 	
 	int[,] level;
 	
+	public bool IsBlocking(int x, int y)
+	{
+		return level[y,x] != 0;
+	}
+	
+	public bool IsBlocking(Vector3 v)
+	{
+		return IsBlocking((int)v.x, (int)v.y);
+	}
+	
 	void GenerateLevel()
 	{
 		level = new int[6,10] {
@@ -17,7 +27,10 @@ public class Level : MonoBehaviour
 			{0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0},
 		};
+	}
 		
+	void GenerateLevelVisuals()
+	{
 		Mesh mesh = LevelMesh.Create(level);
 		GetComponent<MeshFilter>().mesh = mesh;
 		GetComponent<MeshCollider>().sharedMesh = mesh;
@@ -63,9 +76,15 @@ public class Level : MonoBehaviour
 
 	}
 	
+	void Awake()
+	{
+		Globals.Level = this;
+		GenerateLevel();
+	}
+	
 	// Use this for initialization
 	void Start () {
-		GenerateLevel();
+		GenerateLevelVisuals();
 	}
 	
 	// Update is called once per frame
