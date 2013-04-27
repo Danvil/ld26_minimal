@@ -8,6 +8,8 @@ public class Player : MonoBehaviour {
 	const float PLAYER_RADIUS = 0.2f;
 	
 	float shootTimeout = 0;
+
+	public AudioClip[] audioCoin;
 	
 	Living living;
 	
@@ -77,6 +79,20 @@ public class Player : MonoBehaviour {
 			Globals.MainCamera.transform.position.z);
 	}
 	
+	void PickupCoin(Coin coin)
+	{
+		audio.PlayOneShot(audioCoin[Random.Range(0,audioCoin.Length-1)]);
+		Object.Destroy(coin.gameObject);
+	}
+	
+	void OnCollisionEnter(Collision collision)
+	{
+		Coin coin = collision.gameObject.GetComponent<Coin>();
+		if(coin != null) {
+			PickupCoin(coin);
+		}
+	}
+
 	void OnGUI()
 	{
 		if(living.IsDead) {

@@ -4,8 +4,15 @@ using System.Collections;
 public class Level : MonoBehaviour
 {
 	public Light pfLight;
+
+	public GameObject pfCoin;
 	
 	int[,] level;
+	
+	public bool IsFree(int x, int y)
+	{
+		return level[y,x] == 0;
+	}
 	
 	public bool IsBlocking(int x, int y)
 	{
@@ -75,6 +82,20 @@ public class Level : MonoBehaviour
 		this.transform.position = - new Vector3(((float)cols)*0.5f, ((float)rows)*0.5f, 0.0f);
 
 	}
+
+	void GenerateCoins()
+	{
+		for(int y=0; y<level.GetLength(0); y+=2) {
+			for(int x=0; x<level.GetLength(1); x+=2) {
+				if(IsBlocking(x,y)) {
+					continue;
+				}
+				GameObject go = (GameObject)Instantiate(pfCoin);
+				go.transform.parent = this.transform;
+				go.transform.localPosition = new Vector3(0.5f + (float)x, 0.5f + (float)y, 0.0f);
+			}
+		}
+	}
 	
 	void Awake()
 	{
@@ -85,6 +106,7 @@ public class Level : MonoBehaviour
 	// Use this for initialization
 	void Start () {
 		GenerateLevelVisuals();
+		GenerateCoins();
 	}
 	
 	// Update is called once per frame
