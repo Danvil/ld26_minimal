@@ -3,12 +3,12 @@ using System.Collections;
 
 public class Globals : MonoBehaviour {
 	
-	static public Globals GLOBALS;
-	
-	public Camera MainCamera;
-	
+	static public Camera MainCamera;
+
+	static public BombManager BombManager;
+
 	void Awake() {
-		GLOBALS = this;
+		MainCamera = GetComponentInChildren<Camera>();
 	}
 	
 	// Use this for initialization
