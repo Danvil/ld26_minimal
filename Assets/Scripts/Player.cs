@@ -47,6 +47,11 @@ public class Player : MonoBehaviour {
 		if(living.IsDead) {
 			MyTime.Pause = true;
 		}
+		// move camera
+		Globals.MainCamera.transform.position = new Vector3(
+			0.5f*this.transform.position.x,
+			0.5f*this.transform.position.y,
+			Globals.MainCamera.transform.position.z);
 	}
 	
 	void OnGUI()
