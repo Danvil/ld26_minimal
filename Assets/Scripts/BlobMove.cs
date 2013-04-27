@@ -6,8 +6,8 @@ public class BlobMove : MonoBehaviour {
 	const float cSpeedMaxBoost = 1.2f;
 	const float cAvoidStrengthPlayer = 1.0f;
 	const float cAvoidStrengthOther = 0.5f;
-	const float cAvoidStrengthLevel = 0.5f;
-	const float cAvoidStrengthBombs = 3.5f;
+	const float cAvoidStrengthLevel = 1.0f;
+	const float cAvoidStrengthBombs = 2.5f;
 	const float cBombAvoidRadius = 1.0f;
 	const float cRotationMixStrength = 0.5f;
 	
@@ -115,7 +115,7 @@ public class BlobMove : MonoBehaviour {
 		foreach(Bomb x in Globals.BombManager.GetBombs()) { // FIXME reduce range
 			Vector3 delta = x.transform.position - transform.position;
 			float d_min = this.size + cBombAvoidRadius;
-			force -= avoidFalloff(delta.magnitude, 0.5f*d_min) * delta.normalized;
+			force -= avoidFalloff(delta.magnitude, d_min) * delta.normalized;
 		}
 		return force;
 	}
