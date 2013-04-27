@@ -88,8 +88,6 @@ public static class LevelMesh
 		int rows = level.GetLength(0);
 		int cols = level.GetLength(1);
 		
-		Vector3 center = new Vector3(((float)cols)*0.5f, ((float)rows)*0.5f, 0.0f);
-		
 		List<Vector3> vertices = new List<Vector3>();
 		List<int> indices = new List<int>();
 		
@@ -98,10 +96,10 @@ public static class LevelMesh
 			for(int x=0; x<cols; x++) {
 				float h = (IsUp(level, x, y) ? -1.0f : 0.0f);
 				Vector3[] quad = new Vector3[] {
-					new Vector3(x  ,y  ,h) - center,
-					new Vector3(x+1,y  ,h) - center,
-					new Vector3(x+1,y+1,h) - center,
-					new Vector3(x  ,y+1,h) - center
+					new Vector3(x  ,y  ,h),
+					new Vector3(x+1,y  ,h),
+					new Vector3(x+1,y+1,h),
+					new Vector3(x  ,y+1,h)
 				};
 				AddQuad(vertices, indices, quad);
 			}
@@ -117,19 +115,19 @@ public static class LevelMesh
 					// add wall to x side
 					if(up0) {
 						Vector3[] quad = new Vector3[] {
-							new Vector3(x+1,y  ,0 ) - center,
-							new Vector3(x+1,y+1,0 ) - center,
-							new Vector3(x+1,y+1,-1) - center,
-							new Vector3(x+1,y  ,-1) - center
+							new Vector3(x+1,y  ,0 ),
+							new Vector3(x+1,y+1,0 ),
+							new Vector3(x+1,y+1,-1),
+							new Vector3(x+1,y  ,-1)
 						};
 						AddQuad(vertices, indices, quad);
 					}
 					else {
 						Vector3[] quad = new Vector3[] {
-							new Vector3(x+1,y  ,0 ) - center,
-							new Vector3(x+1,y  ,-1) - center,
-							new Vector3(x+1,y+1,-1) - center,
-							new Vector3(x+1,y+1,0 ) - center
+							new Vector3(x+1,y  ,0 ),
+							new Vector3(x+1,y  ,-1),
+							new Vector3(x+1,y+1,-1),
+							new Vector3(x+1,y+1,0 )
 						};
 						AddQuad(vertices, indices, quad);
 					}
@@ -138,19 +136,19 @@ public static class LevelMesh
 					// add wall to y side
 					if(up0) {
 						Vector3[] quad = new Vector3[] {
-							new Vector3(x  ,y+1,0 ) - center,
-							new Vector3(x  ,y+1,-1) - center,
-							new Vector3(x+1,y+1,-1) - center,
-							new Vector3(x+1,y+1,0 ) - center
+							new Vector3(x  ,y+1,0 ),
+							new Vector3(x  ,y+1,-1),
+							new Vector3(x+1,y+1,-1),
+							new Vector3(x+1,y+1,0 )
 						};
 						AddQuad(vertices, indices, quad);
 					}
 					else {
 						Vector3[] quad = new Vector3[] {
-							new Vector3(x  ,y+1,0 ) - center,
-							new Vector3(x+1,y+1,0 ) - center,
-							new Vector3(x+1,y+1,-1) - center,
-							new Vector3(x  ,y+1,-1) - center
+							new Vector3(x  ,y+1,0 ),
+							new Vector3(x+1,y+1,0 ),
+							new Vector3(x+1,y+1,-1),
+							new Vector3(x  ,y+1,-1)
 						};
 						AddQuad(vertices, indices, quad);
 					}
