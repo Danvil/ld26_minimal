@@ -7,6 +7,10 @@ public class Globals : MonoBehaviour {
 
 	static public BombManager BombManager;
 
+	static public LivingManager LivingManager;
+
+	static public Player Player;
+
 	void Awake() {
 		MainCamera = GetComponentInChildren<Camera>();
 	}

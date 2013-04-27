@@ -8,9 +8,12 @@ public class Player : MonoBehaviour {
 	
 	float shootTimeout = 0;
 	
+	Living living;
+	
 	// Use this for initialization
 	void Start () {
-	
+		living = GetComponent<Living>();
+		Globals.Player = this;
 	}
 	
 	// Update is called once per frame
@@ -39,6 +42,18 @@ public class Player : MonoBehaviour {
 			Vector3 start = this.transform.position + new Vector3(0,0,-.8f);
 			Vector3 dir = (target - start).normalized;
 			Globals.BombManager.ThrowBomb(start, THROW_VEL*dir);
+		}
+		// stop time if dead
+		if(living.IsDead) {
+			MyTime.Pause = true;
+		}
+	}
+	
+	void OnGUI()
+	{
+		if(living.IsDead) {
+			Debug.Log("game over");
+			GUI.Label(new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), "Game Over!");
 		}
 	}
 }
