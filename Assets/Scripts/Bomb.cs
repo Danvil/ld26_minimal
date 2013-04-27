@@ -8,9 +8,12 @@ public class Bomb : MonoBehaviour {
 	
 	public GameObject pfExplosion;
 	
-	public float age;
+	float age;
 	
 	const float EXPLOSION_DELAY = 3.0f;
+	const float AUDIO_BUMP_DELAY = 0.3f;
+
+	float audioBumpDelay = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +23,7 @@ public class Bomb : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		age += MyTime.deltaTime;
+		audioBumpDelay += MyTime.deltaTime;
 		if(age > EXPLOSION_DELAY) {
 			age = -10000.0f;
 			// create explosion
@@ -38,6 +42,9 @@ public class Bomb : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision collision) {
-		audio.PlayOneShot(audioBump);
+		if(audioBumpDelay > AUDIO_BUMP_DELAY) {
+			audio.PlayOneShot(audioBump);
+			audioBumpDelay = 0.0f;
+		}
 	}
 }
