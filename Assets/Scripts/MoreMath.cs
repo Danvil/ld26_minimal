@@ -1,7 +1,27 @@
 using UnityEngine;
+using System.Linq;
 
 public static class MoreMath
 {
+	public static int WeightedSampleCFS(float[] cfs) {
+		float r = cfs.Last() * Random.value;
+		for(int i=0; i<cfs.Length; i++) {
+			if(cfs[i] >= r) {
+				return i;
+			}
+		}
+		return cfs.Length - 1;
+	}
+
+	public static int WeightedSample(float[] weights) {
+		float[] cfs = new float[weights.Length];
+		cfs[0] = weights[0];
+		for(int i=1; i<cfs.Length; i++) {
+			cfs[i] = weights[i] + cfs[i-1];
+		}
+		return WeightedSampleCFS(cfs);
+	}
+
 	/** Parabel definiert durch Scheitelpunkt (sx, sy) und Steigung a
 	 * http://de.wikipedia.org/wiki/Parabel_%28Mathematik%29#Scheitelform
 	 */
