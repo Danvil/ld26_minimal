@@ -5,7 +5,7 @@ public class Player : MonoBehaviour {
 	
 	const float SHOOT_TIMEOUT = 1.0f;
 	const float PLAYER_RADIUS = 0.2f;
-	const float PLAYER_VELOCITY = 2.53f;
+	const float PLAYER_VELOCITY = 3.53f;
 	
 	float shootTimeout = 0;
 	

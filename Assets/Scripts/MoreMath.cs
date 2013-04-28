@@ -1,8 +1,14 @@
 using UnityEngine;
+using System.Collections.Generic;
 using System.Linq;
 
 public static class MoreMath
 {
+	public static IEnumerable<T> Randomize<T>(this IEnumerable<T> source)
+	{
+		return source.OrderBy<T, int>(x => Random.Range(0, 1024));
+	}
+
 	public static int WeightedSampleCFS(float[] cfs) {
 		float r = cfs.Last() * Random.value;
 		for(int i=0; i<cfs.Length; i++) {
@@ -20,6 +26,18 @@ public static class MoreMath
 			cfs[i] = weights[i] + cfs[i-1];
 		}
 		return WeightedSampleCFS(cfs);
+	}
+
+	public static int RandomRound(float v) {
+		float nf = Mathf.Floor(v);
+		int n = (int)nf;
+		float r = v - (float)nf;
+		if(Random.value < r) {
+			return n + 1;
+		}
+		else {
+			return n;
+		}
 	}
 
 	/** Parabel definiert durch Scheitelpunkt (sx, sy) und Steigung a

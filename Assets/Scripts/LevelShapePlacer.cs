@@ -2,14 +2,23 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+public struct Loc
+{
+	public int x, y;
+
+	public Loc(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+}
+
 public static class LevelShapePlacer
 {
 	public static void Place(int[,] level)
 	{
-		int rows = level.GetLength(0);
-		int cols = level.GetLength(1);
 		List<int[,]> shapes = CreateShapesAll();
-		List<Loc> locs0 = GetAllLocations(rows, cols);
+		List<Loc> locs0 = GetAllLocations(level);
 		while(shapes.Count > 0) {
 			// select random shape
 			int[,] s = shapes[Random.Range(0, shapes.Count)];
@@ -29,33 +38,18 @@ public static class LevelShapePlacer
 		}
 	}
 
-	public static IEnumerable<T> Randomize<T>(this IEnumerable<T> source)
-	{
-		return source.OrderBy<T, int>(x => Random.Range(0, 1024));
-	}
-
-	struct Loc
-	{
-		public int x, y;
-
-		public Loc(int x, int y)
-		{
-			this.x = x;
-			this.y = y;
-		}
-	}
-
 	static bool CanPlace(int[,] level, int cx, int cy, int[,] shape) {
 		int rows = level.GetLength(0);
 		int cols = level.GetLength(1);
 		int srows = shape.GetLength(0);
 		int scols = shape.GetLength(1);
-		if(!(2 <= cx && cx+scols <= cols-2 && 2 <= cy && cy+srows <= rows-2)) {
+		if(!(2 <= cx && cx+scols <= cols-2 && 2 <= cy && cy+srows <= rows-2))
+		{
 			return false;
 		}
 		for(int y=-2; y<srows+2; y++) {
 			for(int x=-2; x<scols+2; x++) {
-				if(level[cy+y,cx+x] == 1) {
+				if(level[cy+y,cx+x] != 0) {
 					return false;
 				}
 			}
@@ -63,7 +57,8 @@ public static class LevelShapePlacer
 		return true;
 	}
 
-	static void Place(int[,] level, int cx, int cy, int[,] shape) {
+	static void Place(int[,] level, int cx, int cy, int[,] shape)
+	{
 		int srows = shape.GetLength(0);
 		int scols = shape.GetLength(1);
 		for(int y=0; y<srows; y++) {
@@ -73,7 +68,10 @@ public static class LevelShapePlacer
 		}
 	}
 
-	static List<Loc> GetAllLocations(int rows, int cols) {
+	public static List<Loc> GetAllLocations(int[,] level)
+	{
+		int rows = level.GetLength(0);
+		int cols = level.GetLength(1);
 		List<Loc> locs = new List<Loc>();
 		for(int y=0; y<rows; y++) {
 			for(int x=0; x<cols; x++) {
@@ -83,12 +81,30 @@ public static class LevelShapePlacer
 		return locs;
 	}
 
-	static List<int[,]> CreateShapesAll()
+	public static List<Loc> GetFreeLocations(int[,] level)
 	{
-		return CreateShapes().SelectMany(s => TransformAll(s).MyDistinctBy()).ToList();
+		int rows = level.GetLength(0);
+		int cols = level.GetLength(1);
+		List<Loc> locs = new List<Loc>();
+		for(int y=0; y<rows; y++) {
+			for(int x=0; x<cols; x++) {
+				if(level[y,x] == 0) {
+					locs.Add(new Loc(x,y));
+				}
+			}
+		}
+		return locs;
 	}
 
-	static bool Equal(int[,] a, int[,] b) {
+	static List<int[,]> CreateShapesAll()
+	{
+		List<int[,]> v = CreateFixedShapes();
+		v.AddRange(CreateFreeShapes().SelectMany(s => TransformAll(s).MyDistinctBy()));
+		return v;
+	}
+
+	static bool Equal(int[,] a, int[,] b)
+	{
 		if(a.GetLength(0) != b.GetLength(0)) return false;
 		if(a.GetLength(1) != b.GetLength(1)) return false;
 		int rows = a.GetLength(0);
@@ -101,7 +117,8 @@ public static class LevelShapePlacer
 		return true;
 	}
 
-	public static List<int[,]> MyDistinctBy(this List<int[,]> e) {
+	public static List<int[,]> MyDistinctBy(this List<int[,]> e)
+	{
 		List<int[,]> v = new List<int[,]>();
 		for(int i=0; i<e.Count; i++) {
 			bool has = false;
@@ -118,7 +135,8 @@ public static class LevelShapePlacer
 		return v;
 	}
 
-	static int[,] Rotate(int[,] s) {
+	static int[,] Rotate(int[,] s)
+	{
 		int rows = s.GetLength(0);
 		int cols = s.GetLength(1);
 		int[,] r = new int[cols,rows];
@@ -130,7 +148,8 @@ public static class LevelShapePlacer
 		return r;
 	}
 
-	static int[,] FlipX(int[,] s) {
+	static int[,] FlipX(int[,] s)
+	{
 		int rows = s.GetLength(0);
 		int cols = s.GetLength(1);
 		int[,] r = new int[rows,cols];
@@ -162,7 +181,25 @@ public static class LevelShapePlacer
 		return v;
 	}
 
-	static List<int[,]> CreateShapes()
+	static List<int[,]> CreateFixedShapes()
+	{
+		List<int[,]> shapes = new List<int[,]>();
+		shapes.Add(new int[,] {
+			{0,1,0},
+			{1,1,1},
+			{0,1,0},
+			{0,1,0}
+		});
+		shapes.Add(new int[,] {
+			{1,0,1,0,1},
+			{0,0,1,0,0},
+			{1,0,0,0,1},
+			{0,1,1,1,0}
+		});
+		return shapes;
+	}
+
+	static List<int[,]> CreateFreeShapes()
 	{
 		List<int[,]> shapes = new List<int[,]>();
 		shapes.Add(new int[,] {
@@ -182,6 +219,10 @@ public static class LevelShapePlacer
 			{1,1},
 		});
 		shapes.Add(new int[,] {
+			{2,1},
+			{0,1},
+		});
+		shapes.Add(new int[,] {
 			{1,0},
 			{1,0},
 			{1,1}
@@ -196,20 +237,25 @@ public static class LevelShapePlacer
 			{1,1},
 			{1,0}
 		});
-		shapes.Add(new int[,] {
-			{1,1,1},
-			{1,1,1},
-			{1,1,1}
-		});
+		// shapes.Add(new int[,] {
+		// 	{1,1,1},
+		// 	{1,1,1},
+		// 	{1,1,1}
+		// });
 		shapes.Add(new int[,] {
 			{0,1,0},
-			{1,1,1},
+			{1,2,1},
 			{0,1,0}
 		});
 		shapes.Add(new int[,] {
 			{1,1,0},
 			{0,1,0},
 			{0,1,1}
+		});
+		shapes.Add(new int[,] {
+			{2,1,0},
+			{0,1,0},
+			{0,1,2}
 		});
 		shapes.Add(new int[,] {
 			{1,1,1},
@@ -225,11 +271,6 @@ public static class LevelShapePlacer
 			{1,0,0,0},
 			{1,1,1,1},
 			{0,0,0,1}
-		});
-		shapes.Add(new int[,] {
-			{0,0,1,0},
-			{1,1,1,1},
-			{0,0,1,0}
 		});
 		shapes.Add(new int[,] {
 			{1,0,0,1},

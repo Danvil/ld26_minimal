@@ -1,6 +1,6 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Level : MonoBehaviour
 {
@@ -88,15 +88,15 @@ public class Level : MonoBehaviour
 	void PlanLevelTest1()
 	{
 		// 0 = free, 1 = blocked
-		// 3 = player
+		// 9 = player
 		// 8 = enemy, 7 = coin
 		levelPlan = new int[6,10] {
 			{7,0,7,0,7,0,7,0,7,0},
 			{0,0,0,0,0,0,8,0,0,7},
-			{7,0,1,0,8,1,0,0,1,1},
+			{7,0,1,0,8,1,0,0,2,1},
 			{0,0,1,1,1,1,0,8,0,7},
 			{7,0,0,0,0,0,0,0,0,0},
-			{3,7,0,7,0,7,0,7,0,7},
+			{9,7,0,7,0,7,0,7,0,7},
 		};
 		ChooseTheme(Mondrian.WHITE);
 	}
@@ -105,10 +105,10 @@ public class Level : MonoBehaviour
 	{
 		levelPlan = new int[,] {
 			{0,7,0,7,8},
-			{7,0,0,0,7},
-			{0,0,1,0,0},
-			{7,0,0,0,7},
-			{3,7,0,7,0},
+			{7,0,1,0,7},
+			{0,0,2,0,0},
+			{7,0,1,0,7},
+			{9,7,0,7,0},
 		};
 		ChooseTheme(Mondrian.WHITE);
 	}
@@ -118,24 +118,39 @@ public class Level : MonoBehaviour
 		LevelShapePlacer.Place(levelPlan);
 	}
 
-	void PlanCoins(int mult)
+	void PlanEnemies(int area, float mul)
 	{
-		int d = 4 - 3;
-		int rows = levelPlan.GetLength(0);
-		int cols = levelPlan.GetLength(1);
-		for(int y=0; y<rows; y+=d) {
-			levelPlan[y,     0] = 7;
-			levelPlan[y,cols-1] = 7;
-		}
-		for(int x=0; x<cols; x+=d) {
-			levelPlan[0     , x] = 7;
-			levelPlan[rows-1, x] = 7;
+		int num = MoreMath.RandomRound((float)(area) * mul / 10.0f);
+		List<Loc> locs = LevelShapePlacer.GetFreeLocations(levelPlan).Randomize().ToList();
+		int numfree = locs.Count;
+		int k = 0;
+		int placed = 0;
+		foreach(Loc p in locs) {
+			k += num;
+			if(k >= numfree) {
+				k -= numfree;
+				levelPlan[p.y,p.x] = 8;
+				placed ++;
+				if(placed == num) {
+					return;
+				}
+			}
 		}
 	}
 
-	void PlanEnemies(float mult)
+	void PlanCoins(int mult)
 	{
-		
+		int d = 4 - mult;
+		int rows = levelPlan.GetLength(0);
+		int cols = levelPlan.GetLength(1);
+		for(int y=0; y<rows; y+=d) {
+			levelPlan[y,     0] += 7;
+			levelPlan[y,cols-1] += 7;
+		}
+		for(int x=0; x<cols; x+=d) {
+			levelPlan[0     , x] += 7;
+			levelPlan[rows-1, x] += 7;
+		}
 	}
 
 	void PlanLevel(Room room)
@@ -155,18 +170,18 @@ public class Level : MonoBehaviour
 		// place stuff
 		if(RoomManager.SameColor(theme, Mondrian.WHITE)) {
 			PlanShapes();
-			PlanCoins(2);
-			PlanEnemies(1);
+			PlanEnemies(room.Area, 1.0f);
+			PlanCoins(1);
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.RED)) {
 			PlanShapes();
+			PlanEnemies(room.Area, 1.8f);
 			PlanCoins(2);
-			PlanEnemies(2);
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.BLUE)) {
 			PlanShapes();
+			PlanEnemies(room.Area, 0.5f);
 			PlanCoins(1);
-			PlanEnemies(.5f);
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.YELLOW)) {
 			PlanShapes();
@@ -176,7 +191,7 @@ public class Level : MonoBehaviour
 		// place player
 		int playerX = LevelManager.PlayerPosX - room.x1;
 		int playerY = LevelManager.PlayerPosY - room.y1;
-		levelPlan[playerY,playerX] = 3;
+		levelPlan[playerY,playerX] = 9;
 	}
 
 	void ChooseTheme(Color theme)
@@ -290,26 +305,26 @@ public class Level : MonoBehaviour
 				int q = levelPlan[y,x];
 				Vector3 pos = new Vector3(0.5f + (float)x, 0.5f + (float)y, 0.0f);
 				// blocking
-				level[y,x] = (q == 1 ? 1 : 0);
-				if(q == 1) {
+				level[y,x] = (1 <= q && q <= 3 ? 1 : 0);
+				if(level[y,x] == 1) {
 					blockedcells.Add(pos);
 				}
 				// coin
-				if(q == 7) {
+				if(q == 7 || q == 15) {
 					NumCoins++;
 					GameObject go = (GameObject)Instantiate(pfCoin);
 					go.transform.parent = this.transform;
 					go.transform.localPosition = pos;
 				}
 				// enemy
-				if(q == 8) {
+				if(q == 8 || q == 15) {
 					NumEnemies++;
 					GameObject go = (GameObject)Instantiate(pfEnemy);
 					go.transform.parent = this.transform;
 					go.transform.localPosition = pos;
 				}
 				// player start
-				if(q == 3) {
+				if(q == 9) {
 					PlayerStart = pos;
 				}
 			}

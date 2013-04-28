@@ -19,10 +19,7 @@ public class Room
 		return x1 <= x && x < x2 && y1 <= y && y < y2;
 	}
 
-	public int Area()
-	{
-		return Width * Height;
-	}
+	public int Area { get { return Width * Height; } }
 }
 
 public class RoomManager
@@ -55,10 +52,10 @@ public class RoomManager
 		cols = 42;
 		colors = Mondrian.CreateMondrian(rows, cols);
 		rooms = CreateRooms();
-		// FIXME find start room
+		// find start room
 		currentRoom = rooms
 			.Where(x => RoomManager.SameColor(x.color, Mondrian.WHITE))
-			.MinBy(x => x.Area());
+			.MinBy(x => x.Area);
 		currentRoom.isCleared = true;
 	}
 
