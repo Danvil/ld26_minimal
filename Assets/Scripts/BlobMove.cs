@@ -55,7 +55,7 @@ public class BlobMove : MonoBehaviour {
 		Vector3 d = Globals.Player.transform.position - transform.position;
 		float m = d.magnitude;
 		if(m == 0) {
-			return Vector3.zero; // FIXME
+			return Vector3.zero; // TODO
 		}
 		if(playerFollowStrength >= 0) {
 			if(m < cMinRadius) {
@@ -101,7 +101,7 @@ public class BlobMove : MonoBehaviour {
 	// avoid other
 	Vector3 computeAvoidOther() {
 		Vector3 force = Vector3.zero;
-		foreach(BlobMove x in Globals.BlobManager.GetMoveBehaviours()) { // FIXME reduce range
+		foreach(BlobMove x in Globals.BlobManager.GetMoveBehaviours()) { // TODO reduce range
 			Vector3 delta = x.transform.position - transform.position;
 			float d_min = this.size + x.size;
 			force -= avoidFalloff(delta.magnitude, 0.5f*d_min) * delta.normalized;
@@ -112,7 +112,7 @@ public class BlobMove : MonoBehaviour {
 	// avoid bombs
 	Vector3 computeAvoidBombs() {
 		Vector3 force = Vector3.zero;
-		foreach(Bomb x in Globals.BombManager.GetBombs()) { // FIXME reduce range
+		foreach(Bomb x in Globals.BombManager.GetBombs()) { // TODO reduce range
 			Vector3 delta = x.transform.position - transform.position;
 			float d_min = this.size + cBombAvoidRadius;
 			force -= avoidFalloff(delta.magnitude, d_min) * delta.normalized;
