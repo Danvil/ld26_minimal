@@ -17,9 +17,13 @@ public class Mondrian
 		public int x1, x2, y1, y2;
 		public Color32 color;
 		public Node[] children = new Node[] {};
+		
+		public bool BossSuitable {
+			get { return x2-x1-3 >= 9 && y2-y1-3 >= 9; }
+		}
 	};
 
-	static bool MondrianSplit(Node n)
+	static bool MondrianSplit(Node n, int minsize)
 	{
 		// x1     x2
 		// |      |
@@ -32,8 +36,8 @@ public class Mondrian
 		// XOOSOOXOOSOOX=====
 
 		// can split?
-		int dx = (n.x2 - n.x1) - 12;
-		int dy = (n.y2 - n.y1) - 12;
+		int dx = (n.x2 - n.x1) - 8 - minsize;
+		int dy = (n.y2 - n.y1) - 8 - minsize;
 		if(dx > 0 || dy > 0) {
 			// decide randomly if splitting is done
 			if(Random.value < -0.037f + 0.8f / Mathf.Sqrt((float)(System.Math.Max(dx+1,1)*System.Math.Max(dy+1,1)))) {
@@ -53,7 +57,7 @@ public class Mondrian
 			}
 			// do splitting
 			if(splitx) {
-				int xs = Random.Range(n.x1+6, n.x2-7);
+				int xs = Random.Range(n.x1+6, n.x2-2-minsize);
 				Node n1 = new Node();
 				n1.x1 = n.x1;
 				n1.x2 = xs + 1;
@@ -67,7 +71,7 @@ public class Mondrian
 				n.children = new Node[] { n1, n2 };
 			}
 			else {
-				int ys = Random.Range(n.y1+6, n.y2-7);
+				int ys = Random.Range(n.y1+6, n.y2-2-minsize);
 				Node n1 = new Node();
 				n1.x1 = n.x1;
 				n1.x2 = n.x2;
@@ -124,10 +128,18 @@ public class Mondrian
 		nodes.Add(root);
 		// split nodes recursively
 		while(nodes.Count > 0) {
+			// check if there is still one suitable for boss room (9x9)
+			var bosses = nodes.Where(x => x.BossSuitable).ToList();
 			// pick random node
 			Node n = nodes[Random.Range(0, nodes.Count)];
-			// split node
-			MondrianSplit(n);
+			if(bosses.Count == 1 && bosses.First() == n) {
+				// need at least 9x9
+				MondrianSplit(n, 9);
+			}
+			else {
+				// need at least 5x5
+				MondrianSplit(n, 5);
+			}
 			// remove and add children
 			nodes.Remove(n);
 			if(n.children.Length == 0) {

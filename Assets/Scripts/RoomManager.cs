@@ -9,6 +9,7 @@ public class Room
 	public int y1, y2;
 	public Color32 color;
 	public bool isCleared = false;
+	public bool isBoss = false;
 
 	public int Width { get { return x2 - 1 - x1; } }
 	
@@ -32,6 +33,8 @@ public class RoomManager
 	List<Room> rooms = new List<Room>();
 
 	public Room currentRoom;
+
+	public Room bossRoom;
 
 	public int Rows { get { return rows; } }
 
@@ -128,6 +131,11 @@ public class RoomManager
 				rooms.Add(room);
 			}
 		}
+		// select boss room
+		bossRoom = rooms
+			//.Where(x => RoomManager.SameColor(x.color, Mondrian.WHITE))
+			.MaxBy(x => x.Area);
+		bossRoom.isBoss = true;
 		return rooms;
 	}
 

@@ -65,7 +65,7 @@ public class Player : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
 			Vector3 target = ray.GetPoint(- ray.origin.z / ray.direction.z);
 			Vector3 start = this.transform.position + new Vector3(0,0,-.8f);
-			Globals.BombManager.ThrowBomb(start, target);
+			Globals.BombManager.ThrowBomb(start, target, true);
 		}
 	}
 

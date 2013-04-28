@@ -7,6 +7,7 @@ public class Level : MonoBehaviour
 	public Light pfLight;
 	public GameObject pfCoin;
 	public GameObject pfEnemy;
+	public GameObject pfBoss;
 
 	public Material matLevel;
 	public Material matCoin;
@@ -113,9 +114,9 @@ public class Level : MonoBehaviour
 		ChooseTheme(Mondrian.WHITE);
 	}
 
-	void PlanShapes()
+	void PlanShapes(bool isboss)
 	{
-		LevelShapePlacer.Place(levelPlan);
+		LevelShapePlacer.Place(levelPlan, isboss);
 	}
 
 	void PlanEnemies(int area, float mul)
@@ -167,24 +168,25 @@ public class Level : MonoBehaviour
 		// choose theme
 		Color32 theme = room.color;
 		ChooseTheme(theme);
+		bool isboss = room.isBoss;
 		// place stuff
 		if(RoomManager.SameColor(theme, Mondrian.WHITE)) {
-			PlanShapes();
+			PlanShapes(isboss);
 			PlanEnemies(room.Area, 1.0f);
 			PlanCoins(1);
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.RED)) {
-			PlanShapes();
+			PlanShapes(isboss);
 			PlanEnemies(room.Area, 1.8f);
 			PlanCoins(2);
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.BLUE)) {
-			PlanShapes();
+			PlanShapes(isboss);
 			PlanEnemies(room.Area, 0.5f);
 			PlanCoins(1);
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.YELLOW)) {
-			PlanShapes();
+			PlanShapes(isboss);
 			PlanCoins(3);
 		}
 		else throw new System.ApplicationException();
@@ -320,6 +322,12 @@ public class Level : MonoBehaviour
 				if(q == 8 || q == 15) {
 					NumEnemies++;
 					GameObject go = (GameObject)Instantiate(pfEnemy);
+					go.transform.parent = this.transform;
+					go.transform.localPosition = pos;
+				}
+				if(q == 5) {
+					NumEnemies++;
+					GameObject go = (GameObject)Instantiate(pfBoss);
 					go.transform.parent = this.transform;
 					go.transform.localPosition = pos;
 				}

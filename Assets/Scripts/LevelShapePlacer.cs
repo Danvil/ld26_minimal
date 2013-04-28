@@ -15,17 +15,30 @@ public struct Loc
 
 public static class LevelShapePlacer
 {
-	public static void Place(int[,] level)
+	public static void Place(int[,] level, bool hasBoss)
 	{
-		List<int[,]> shapes = CreateShapesAll();
 		List<Loc> locs0 = GetAllLocations(level);
+		// place boss arena
+		if(hasBoss) {
+			List<int[,]> arenas = CreateBossArenaShapes().SelectMany(s => TransformAll(s).MyDistinctBy()).ToList();
+			int[,] arena = arenas[Random.Range(0, arenas.Count)];
+			// place boss
+			foreach(Loc p in locs0.Randomize()) {
+				if(CanPlace(level, p.x, p.y, arena, 1)) {
+					Place(level, p.x, p.y, arena);
+					break;
+				}
+			}			
+		}
+		// create rest of level
+		List<int[,]> shapes = CreateShapesAll();
 		while(shapes.Count > 0) {
 			// select random shape
 			int[,] s = shapes[Random.Range(0, shapes.Count)];
 			// try to place shape
 			bool canPlace = false;
 			foreach(Loc p in locs0.Randomize()) {
-				if(CanPlace(level, p.x, p.y, s)) {
+				if(CanPlace(level, p.x, p.y, s, 2)) {
 					// place
 					Place(level, p.x, p.y, s);
 					canPlace = true;
@@ -38,17 +51,17 @@ public static class LevelShapePlacer
 		}
 	}
 
-	static bool CanPlace(int[,] level, int cx, int cy, int[,] shape) {
+	static bool CanPlace(int[,] level, int cx, int cy, int[,] shape, int D) {
 		int rows = level.GetLength(0);
 		int cols = level.GetLength(1);
 		int srows = shape.GetLength(0);
 		int scols = shape.GetLength(1);
-		if(!(2 <= cx && cx+scols <= cols-2 && 2 <= cy && cy+srows <= rows-2))
+		if(!(D <= cx && cx+scols <= cols-D && D <= cy && cy+srows <= rows-D))
 		{
 			return false;
 		}
-		for(int y=-2; y<srows+2; y++) {
-			for(int x=-2; x<scols+2; x++) {
+		for(int y=-D; y<srows+D; y++) {
+			for(int x=-D; x<scols+D; x++) {
 				if(level[cy+y,cx+x] != 0) {
 					return false;
 				}
@@ -180,7 +193,40 @@ public static class LevelShapePlacer
 		v.Add(f4);
 		return v;
 	}
-
+	
+	static List<int[,]> CreateBossArenaShapes()
+	{
+		List<int[,]> shapes = new List<int[,]>();
+		shapes.Add(new int[,] {
+			{1,1,1,0,1,1,1},
+			{1,1,0,0,0,1,1},
+			{1,0,0,0,0,0,1},
+			{0,0,0,5,0,0,0},
+			{1,0,0,0,0,0,1},
+			{1,1,0,0,0,1,1},
+			{1,1,1,0,1,1,1}
+		});
+		shapes.Add(new int[,] {
+			{1,1,0,0,0,1,1},
+			{1,0,0,0,0,0,1},
+			{0,0,0,0,0,0,0},
+			{0,0,0,5,0,0,0},
+			{0,0,0,0,0,0,0},
+			{1,0,0,0,0,0,1},
+			{1,1,0,0,0,1,1}
+		});
+		shapes.Add(new int[,] {
+			{0,0,1,1,1,0,0},
+			{0,0,0,0,0,0,0},
+			{1,0,0,0,0,0,1},
+			{1,0,0,5,0,0,1},
+			{1,0,0,0,0,0,1},
+			{0,0,0,0,0,0,0},
+			{0,0,1,1,1,0,0}
+		});
+		return shapes;
+	}
+	
 	static List<int[,]> CreateFixedShapes()
 	{
 		List<int[,]> shapes = new List<int[,]>();

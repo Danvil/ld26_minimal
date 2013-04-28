@@ -8,6 +8,8 @@ public class Bomb : MonoBehaviour {
 	
 	public GameObject pfExplosion;
 	
+	public bool IsPlayerBomb = false;
+	
 	float age;
 	
 	const float EXPLOSION_DELAY = 3.0f;

@@ -6,11 +6,15 @@ using System.Linq;
 public class Enemy : MonoBehaviour {
 	
 	const float GOAL_REACHED_DIST = 0.1f;
-	const float VELOCITY_SLOW = 0.75f;
-	const float VELOCITY_FAST = 1.35f;
-	const float PLAYER_APPROACH_DIST = 2.4f;
-	const float BOMB_TIMEOUT = 1.7f;
-	const float ALARM_TIMEOUT = 4.3f;
+	public float VELOCITY_SLOW = 0.75f;
+	public float VELOCITY_FAST = 1.35f;
+	public float PLAYER_APPROACH_DIST = 2.4f;
+	public float BOMB_TIMEOUT = 1.7f;
+	public float ALARM_TIMEOUT = 4.3f;
+	
+	public bool AimAtPlayer = true;
+	public int NumBombs = 1;
+	public float BombStartHeight = -0.8f;
 
 	BlobMove move;
 	Living life;
@@ -57,7 +61,30 @@ public class Enemy : MonoBehaviour {
 				move.DisableGoal();
 				// throw grenade
 				if(bombTimeout >= BOMB_TIMEOUT) {
-					Globals.BombManager.ThrowBomb(this.transform.position + new Vector3(0,0,-.8f), player_pos);
+					if(AimAtPlayer) {
+						if(NumBombs == 1) {
+							Globals.BombManager.ThrowBomb(this.transform.position + new Vector3(0,0,BombStartHeight), player_pos, false);
+						}
+						else {
+							for(int i=0; i<NumBombs; i++) {
+								float dx = Random.Range(-0.2f, +0.2f);
+								float dy = Random.Range(-0.2f, +0.2f);
+								Globals.BombManager.ThrowBomb(this.transform.position + new Vector3(dx,dy,BombStartHeight), player_pos, false);
+							}
+						}
+					}
+					else {
+						float deltaPhi = 6.283f / (float)(NumBombs);
+						float phi = 0.0f;
+						for(int i=0; i<NumBombs; i++, phi+=deltaPhi) {
+							float dx = Mathf.Cos(phi);
+							float dy = Mathf.Sin(phi);
+							Globals.BombManager.ThrowBomb(
+								this.transform.position + new Vector3(0.4f*dx,0.4f*dy,BombStartHeight),
+								this.transform.position + new Vector3(5.0f*dx, 5.0f*dy, 0.0f),
+								false);
+						}
+					}
 					bombTimeout = 0.0f;
 				}
 			}

@@ -7,7 +7,7 @@ public class BlobMove : MonoBehaviour {
 	const float cAvoidStrengthPlayer = 1.0f;
 	const float cAvoidStrengthOther = 0.5f;
 	const float cAvoidStrengthLevel = 1.0f;
-	const float cAvoidStrengthBombs = 2.5f;
+	public float cAvoidStrengthBombs = 2.5f;
 	const float cBombAvoidRadius = 1.0f;
 	const float cRotationMixStrength = 0.5f;
 	

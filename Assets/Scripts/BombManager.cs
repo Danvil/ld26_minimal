@@ -55,13 +55,15 @@ public class BombManager : MonoBehaviour {
 		return explosions.ToArray();
 	}
 	
-	public void ThrowBomb(Vector3 start, Vector3 target)
+	public void ThrowBomb(Vector3 start, Vector3 target, bool isplayer)
 	{
 		GameObject go = (GameObject)Instantiate(pfBomb);
 		go.transform.parent = this.transform;
 		go.transform.position = start;
 		go.rigidbody.velocity = (target - start).normalized * THROW_VEL;
-		bombs.Add(go.GetComponent<Bomb>());
+		Bomb bomb = go.GetComponent<Bomb>();
+		bomb.IsPlayerBomb = isplayer;
+		bombs.Add(bomb);
 	}
 	
 	public void ExplodeBomb(Bomb bomb)
