@@ -6,6 +6,10 @@ using System.Linq;
 public class Mondrian
 {
 
+	public static Color32 WHITE = new Color32(255,255,255,255);
+	public static Color32 RED = new Color32(255,0,0,255);
+	public static Color32 BLUE = new Color32(0,0,255,255);
+	public static Color32 YELLOW = new Color32(255,255,0,255);
 	public static Color32 BORDER = new Color32(0,0,0,255);
 	
 	public class Node
@@ -83,12 +87,7 @@ public class Mondrian
 		}
 	}
 
-	static Color32[] colors = new Color32[] {
-		new Color32(255,255,255,255), // white
-		new Color32(255,  0,  0,255), // red
-		new Color32(  0,  0,255,255), // blue
-		new Color32(255,255,  0,255)  // yellow
-	};
+	static Color32[] colors = new Color32[] { WHITE, RED, BLUE, YELLOW };
 
 	static float[] ColorWeights(int[] nums)
 	{

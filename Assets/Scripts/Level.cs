@@ -5,10 +5,25 @@ using System.Collections.Generic;
 public class Level : MonoBehaviour
 {
 	public Light pfLight;
-
 	public GameObject pfCoin;
-	
 	public GameObject pfEnemy;
+
+	public Material matLevel;
+	public Material matCoin;
+	public Material matBomb;
+	public Material matBombExplosion;
+	public Material matEnemy;
+
+	public Color32 ColorWhite	= new Color32(183,183,183,255);
+	public Color32 ColorBlue	= new Color32( 41, 89,238,255);
+	public Color32 ColorRed		= new Color32(221, 40, 40,255);
+	public Color32 ColorYellow	= new Color32(181,179, 20,255);
+	public Color32 ColorBlack	= new Color32(  0,  0,  0,255);
+
+	Color32 colorLevel;
+	Color32 colorCoin;
+	Color32 colorBomb;
+	Color32 colorEnemy;
 	
 	int[,] levelPlan;
 	
@@ -66,26 +81,77 @@ public class Level : MonoBehaviour
 			|| IsBlocking(v + new Vector3(0,+r,0));
 	}
 	
-	void PlanLevel()
+	void PlanLevelTest1()
 	{
 		// 0 = free, 1 = blocked
 		// 3 = player
 		// 8 = enemy, 7 = coin
-		// levelPlan = new int[6,10] {
-		// 	{7,0,7,0,7,0,7,0,7,0},
-		// 	{0,0,0,0,0,0,8,0,0,7},
-		// 	{7,0,1,0,8,1,0,0,1,1},
-		// 	{0,0,1,1,1,1,0,8,0,7},
-		// 	{7,0,0,0,0,0,0,0,0,0},
-		// 	{3,7,0,7,0,7,0,7,0,7},
-		// };
+		levelPlan = new int[6,10] {
+			{7,0,7,0,7,0,7,0,7,0},
+			{0,0,0,0,0,0,8,0,0,7},
+			{7,0,1,0,8,1,0,0,1,1},
+			{0,0,1,1,1,1,0,8,0,7},
+			{7,0,0,0,0,0,0,0,0,0},
+			{3,7,0,7,0,7,0,7,0,7},
+		};
+		ChooseTheme(Mondrian.WHITE);
+	}
+
+	void PlanLevelTest2()
+	{
 		levelPlan = new int[,] {
-			{0,7,0,7,0},
+			{0,7,0,7,8},
 			{7,0,0,0,7},
 			{0,0,1,0,0},
 			{7,0,0,0,7},
 			{3,7,0,7,0},
 		};
+		ChooseTheme(Mondrian.WHITE);
+	}
+
+	void PlanLevel(Room room)
+	{
+		// FIXME
+		PlanLevelTest2();
+		ChooseTheme(room.color);
+	}
+
+	void ChooseTheme(Color theme)
+	{
+		if(RoomManager.SameColor(theme, Mondrian.WHITE)) {
+			colorLevel = ColorWhite;
+			colorCoin = ColorYellow;
+			colorBomb = ColorRed;
+			colorEnemy = ColorBlue;
+		}
+		else if(RoomManager.SameColor(theme, Mondrian.RED)) {
+			colorLevel = ColorRed;
+			colorCoin = ColorYellow;
+			colorBomb = ColorBlack;
+			colorEnemy = ColorBlue;
+		}
+		else if(RoomManager.SameColor(theme, Mondrian.BLUE)) {
+			colorLevel = ColorBlue;
+			colorCoin = ColorYellow;
+			colorBomb = ColorRed;
+			colorEnemy = ColorBlack;
+		}
+		else if(RoomManager.SameColor(theme, Mondrian.YELLOW)) {
+			colorLevel = ColorYellow;
+			colorCoin = ColorRed;
+			colorBomb = ColorBlue;
+			colorEnemy = ColorBlack;
+		}
+		else throw new System.ApplicationException();
+	}
+
+	void ChangeColors()
+	{
+		matLevel.color = colorLevel;
+		matCoin.color = colorCoin;
+		matBomb.color = colorBomb;
+		matBombExplosion.SetColor("_TintColor", colorBomb);
+		matEnemy.color = colorEnemy;
 	}
 	
 	void GenerateMesh()
@@ -175,17 +241,38 @@ public class Level : MonoBehaviour
 	void Awake()
 	{
 		Globals.Level = this;
-		PlanLevel();
+		if(Globals.RoomManager != null) {
+			PlanLevel(Globals.RoomManager.currentRoom);
+		}
+		else {
+			PlanLevelTest2();	
+		}
 	}
-	
+
 	void Start ()
 	{
+		ChangeColors();
 		GenerateLevel();
 		GenerateMesh();
 		GenerateLights();
 	}
 	
+	int tmp = 0;
+
 	void Update ()
-	{}
+	{
+		if(Input.GetMouseButtonDown(1)) {
+			tmp = (tmp + 1) % 4;
+			Color32 theme;
+			switch(tmp) {
+				default: case 0: theme = Mondrian.WHITE; break;
+				case 1: theme = Mondrian.RED; break;
+				case 2: theme = Mondrian.BLUE; break;
+				case 3: theme = Mondrian.YELLOW; break;
+			}
+			ChooseTheme(theme);
+			ChangeColors();
+		}
+	}
 
 }

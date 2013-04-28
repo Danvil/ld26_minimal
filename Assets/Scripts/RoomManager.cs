@@ -67,7 +67,7 @@ public class RoomManager
 		return true;
 	}
 
-	static bool SameColor(Color32 x, Color32 y) {
+	public static bool SameColor(Color32 x, Color32 y) {
 		return x.r == y.r && x.g == y.g && x.b == y.b && x.a == y.a;
 	}
 
