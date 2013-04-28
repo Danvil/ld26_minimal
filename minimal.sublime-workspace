@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"row",
+				"rows-1"
+			],
+			[
+				"Dr",
+				"DrawHorzLine"
+			],
+			[
+				"VEL",
+				"VELOCITY_SLOW"
+			],
+			[
+				"VE",
+				"VELOCITY_SLOW"
+			],
+			[
+				"Gen",
+				"GenerateLights"
+			],
+			[
+				"PLA",
+				"PLAYER_VELOCITY"
+			],
+			[
+				"PL",
+				"PLAYER_RADIUS"
+			],
+			[
+				"new",
+				"newpos"
+			],
+			[
+				"aud",
+				"audioBumpDelay"
+			],
+			[
+				"au",
+				"audioBumpDelay"
+			],
+			[
+				"scl",
+				"scl_cols"
+			],
+			[
+				"up",
+				"up0"
+			],
+			[
 				"li",
 				"lightmap"
 			],
@@ -167,6 +215,182 @@
 	},
 	"buffers":
 	[
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 180,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Camera.cs",
+			"settings":
+			{
+				"buffer_size": 607,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/david/Documents/git/evolution/Assets/Scripts/BlobShape.cs",
+			"settings":
+			{
+				"buffer_size": 5097,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Player.cs",
+			"settings":
+			{
+				"buffer_size": 2345,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/BombManager.cs",
+			"settings":
+			{
+				"buffer_size": 1587,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/david/Documents/git/evolution/Assets/Scripts/PlayerInteract.cs",
+			"settings":
+			{
+				"buffer_size": 4067,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/LivingManager.cs",
+			"settings":
+			{
+				"buffer_size": 402,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Globals.cs",
+			"settings":
+			{
+				"buffer_size": 395,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Living.cs",
+			"settings":
+			{
+				"buffer_size": 531,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/LevelMesh.cs",
+			"settings":
+			{
+				"buffer_size": 2508,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/DontGoThroughThings.cs",
+			"settings":
+			{
+				"buffer_size": 1529,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Level.cs",
+			"settings":
+			{
+				"buffer_size": 3411,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Bomb.cs",
+			"settings":
+			{
+				"buffer_size": 1193,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Sounds/coin.bfxrlibrary",
+			"settings":
+			{
+				"buffer_size": 1054,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Enemy.cs",
+			"settings":
+			{
+				"buffer_size": 1440,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/david/Documents/git/evolution/Assets/Scripts/BlobMove.cs",
+			"settings":
+			{
+				"buffer_size": 5450,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/david/Documents/git/evolution/Assets/Scripts/MoreMath.cs",
+			"settings":
+			{
+				"buffer_size": 1969,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assets/Scripts/BlobMove.cs",
+			"settings":
+			{
+				"buffer_size": 4960,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/david/Documents/git/outpost/Assets/Scripts/Game/OverlayTextureGenerator.cs",
+			"settings":
+			{
+				"buffer_size": 1782,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/david/Documents/git/outpost/Assets/Scripts/Game/CellOverlay.cs",
+			"settings":
+			{
+				"buffer_size": 587,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/david/Documents/git/oppression/Assets/Scripts/Person.cs",
+			"settings":
+			{
+				"buffer_size": 9577,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Mondrian.cs",
+			"settings":
+			{
+				"buffer_size": 1883,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "Packages/Unity3D Build System/Unity.sublime-build",
 	"command_palette":
@@ -276,6 +500,8 @@
 	},
 	"file_history":
 	[
+		"/C/Users/david/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/david/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/D/Data/Studium/Semester/0404/spielth/ItDil/ItDil/code/itdil.cpp",
 		"/D/Data/Studium/Semester/0404/spielth/ItDil/ItDil/code/itdil.h",
 		"/C/Users/david/Documents/git/outpost/Assets/Code/Outpost/Lux/Patch.cs",
@@ -401,9 +627,7 @@
 		"/C/Users/david/Documents/git/outpost/AStarPathFinder-source/AStarPathFinder/Core/Properties/AssemblyInfo.cs",
 		"/C/Users/david/Documents/git/outpost/AStarPathFinder-source/AStarPathFinder/Core/AuthorAttribute.cs",
 		"/C/Users/david/Documents/git/outpost/Assets/Materials/AtlasSolid.mat.meta",
-		"/C/Users/david/Documents/git/outpost/Assets/Materials/AtlasSolid.mat",
-		"/C/Users/david/Documents/git/outpost/Assets/Textures/atlas.txt",
-		"/C/Users/david/Documents/git/outpost/Assets/Scripts/Core/Radiosity/Patch.cs"
+		"/C/Users/david/Documents/git/outpost/Assets/Materials/AtlasSolid.mat"
 	],
 	"find":
 	{
@@ -424,6 +648,10 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"AVOID_LEVEL_STRENGTH",
+			"newpos",
+			"d",
+			"newpos",
 			"log",
 			"atan",
 			"sqrt",
@@ -540,8 +768,599 @@
 	"groups":
 	[
 		{
+			"selected": 19,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": ".gitignore",
+					"settings":
+					{
+						"buffer_size": 180,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								180,
+								180
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Assets/Scripts/Camera.cs",
+					"settings":
+					{
+						"buffer_size": 607,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								607,
+								607
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/david/Documents/git/evolution/Assets/Scripts/BlobShape.cs",
+					"settings":
+					{
+						"buffer_size": 5097,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1803,
+								1815
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1794.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Assets/Scripts/Player.cs",
+					"settings":
+					{
+						"buffer_size": 2345,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								844,
+								850
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 90.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Assets/Scripts/BombManager.cs",
+					"settings":
+					{
+						"buffer_size": 1587,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								397,
+								397
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 90.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/C/Users/david/Documents/git/evolution/Assets/Scripts/PlayerInteract.cs",
+					"settings":
+					{
+						"buffer_size": 4067,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3135,
+								3135
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1561.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Assets/Scripts/LivingManager.cs",
+					"settings":
+					{
+						"buffer_size": 402,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								154,
+								164
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Assets/Scripts/Globals.cs",
+					"settings":
+					{
+						"buffer_size": 395,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								264,
+								264
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Assets/Scripts/Living.cs",
+					"settings":
+					{
+						"buffer_size": 531,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								464,
+								464
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "Assets/Scripts/LevelMesh.cs",
+					"settings":
+					{
+						"buffer_size": 2508,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								100,
+								100
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "Assets/Scripts/DontGoThroughThings.cs",
+					"settings":
+					{
+						"buffer_size": 1529,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								538,
+								538
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "Assets/Scripts/Level.cs",
+					"settings":
+					{
+						"buffer_size": 3411,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2851,
+								2851
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1442.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "Assets/Scripts/Bomb.cs",
+					"settings":
+					{
+						"buffer_size": 1193,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1037,
+								1191
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "Assets/Sounds/coin.bfxrlibrary",
+					"settings":
+					{
+						"buffer_size": 1054,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1054,
+								1054
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "Assets/Scripts/Enemy.cs",
+					"settings":
+					{
+						"buffer_size": 1440,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								441,
+								441
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 135.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "/C/Users/david/Documents/git/evolution/Assets/Scripts/BlobMove.cs",
+					"settings":
+					{
+						"buffer_size": 5450,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3784,
+								3784
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1598.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "/C/Users/david/Documents/git/evolution/Assets/Scripts/MoreMath.cs",
+					"settings":
+					{
+						"buffer_size": 1969,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								515,
+								515
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "Assets/Scripts/BlobMove.cs",
+					"settings":
+					{
+						"buffer_size": 4960,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2111,
+								2111
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1152.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "/C/Users/david/Documents/git/outpost/Assets/Scripts/Game/OverlayTextureGenerator.cs",
+					"settings":
+					{
+						"buffer_size": 1782,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								459,
+								459
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "/C/Users/david/Documents/git/outpost/Assets/Scripts/Game/CellOverlay.cs",
+					"settings":
+					{
+						"buffer_size": 587,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								443,
+								443
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 20,
+					"file": "/C/Users/david/Documents/git/oppression/Assets/Scripts/Person.cs",
+					"settings":
+					{
+						"buffer_size": 9577,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8389,
+								8389
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4187.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 21,
+					"file": "Assets/Scripts/Mondrian.cs",
+					"settings":
+					{
+						"buffer_size": 1883,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								231,
+								231
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Danvil C#/Danvil C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -594,6 +1413,10 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"livinman",
+				"minimal/Assets/Scripts/LivingManager.cs"
+			],
 			[
 				"radio",
 				"Code/Outpost/Lux/Radiosity.cs"
@@ -761,6 +1584,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 329.0,
+	"side_bar_width": 244.0,
 	"status_bar_visible": true
 }
