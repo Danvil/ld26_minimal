@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class Globals : MonoBehaviour {
+public class Globals
+{
 	
-	static public Camera MainCamera;
-
 	static public BombManager BombManager;
 
 	static public BlobManager BlobManager;
@@ -13,17 +12,6 @@ public class Globals : MonoBehaviour {
 	
 	static public Level Level;
 
-	void Awake() {
-		MainCamera = GetComponentInChildren<Camera>();
-	}
-	
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	static public RoomManager RoomManager;
+
 }

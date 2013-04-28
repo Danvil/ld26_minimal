@@ -8,10 +8,11 @@ public class Player : MonoBehaviour {
 	const float PLAYER_VELOCITY = 2.53f;
 	
 	float shootTimeout = 0;
-
-	public AudioClip[] audioCoin;
 	
 	public Living living { get; private set; }
+
+	public int NumCoinsCollected = 0;
+	public int NumEnemiesKilled = 0;
 	
 	void Awake()
 	{
@@ -61,7 +62,7 @@ public class Player : MonoBehaviour {
 		// shoot and aim with mouse
 		if(Input.GetButton("Fire1") && shootTimeout <= 0) {
 			shootTimeout = SHOOT_TIMEOUT;
-			Ray ray = Globals.MainCamera.ScreenPointToRay(Input.mousePosition); 
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
 			Vector3 target = ray.GetPoint(- ray.origin.z / ray.direction.z);
 			Vector3 start = this.transform.position + new Vector3(0,0,-.8f);
 			Globals.BombManager.ThrowBomb(start, target);
@@ -78,23 +79,14 @@ public class Player : MonoBehaviour {
 		}
 		// move camera
 		Vector3 campos = Globals.Level.LevelCenter + 0.4f*(this.transform.position - Globals.Level.LevelCenter);
-		Globals.MainCamera.transform.position = new Vector3(campos.x, campos.y, Globals.MainCamera.transform.position.z);
-	}
-	
-	void PickupCoin(Coin coin)
-	{
-		audio.PlayOneShot(audioCoin[Random.Range(0,audioCoin.Length-1)]);
-		Object.Destroy(coin.gameObject);
-	}
-	
-	void OnCollisionEnter(Collision collision)
-	{
-		Coin coin = collision.gameObject.GetComponent<Coin>();
-		if(coin != null) {
-			PickupCoin(coin);
+		Camera.main.transform.position = new Vector3(campos.x, campos.y, Camera.main.transform.position.z);
+		// check for completion
+		if(NumCoinsCollected == Globals.Level.NumCoins && NumEnemiesKilled == Globals.Level.NumEnemies) {
+			// WIN
+			LevelManager.GotoWorld();
 		}
 	}
-
+	
 	void OnGUI()
 	{
 		if(living.IsDead) {

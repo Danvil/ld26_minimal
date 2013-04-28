@@ -23,6 +23,10 @@ public class Level : MonoBehaviour
 			return new Vector3(0.5f * (float)level.GetLength(1), 0.5f * (float)level.GetLength(0), 0.0f);
 		}
 	}
+
+	public int NumCoins { get; private set; }
+	
+	public int NumEnemies { get; private set; }
 	
 	public bool IsPathBlocked(Vector3 a, Vector3 b)
 	{
@@ -67,13 +71,20 @@ public class Level : MonoBehaviour
 		// 0 = free, 1 = blocked
 		// 3 = player
 		// 8 = enemy, 7 = coin
-		levelPlan = new int[6,10] {
-			{7,0,7,0,7,0,7,0,7,0},
-			{0,0,0,0,0,0,8,0,0,7},
-			{7,0,1,0,8,1,0,0,1,1},
-			{0,0,1,1,1,1,0,8,0,7},
-			{7,0,0,0,0,0,0,0,0,0},
-			{3,7,0,7,0,7,0,7,0,7},
+		// levelPlan = new int[6,10] {
+		// 	{7,0,7,0,7,0,7,0,7,0},
+		// 	{0,0,0,0,0,0,8,0,0,7},
+		// 	{7,0,1,0,8,1,0,0,1,1},
+		// 	{0,0,1,1,1,1,0,8,0,7},
+		// 	{7,0,0,0,0,0,0,0,0,0},
+		// 	{3,7,0,7,0,7,0,7,0,7},
+		// };
+		levelPlan = new int[,] {
+			{0,7,0,7,0},
+			{7,0,0,0,7},
+			{0,0,1,0,0},
+			{7,0,0,0,7},
+			{3,7,0,7,0},
 		};
 	}
 	
@@ -125,6 +136,8 @@ public class Level : MonoBehaviour
 	
 	void GenerateLevel()
 	{	
+		NumCoins = 0;
+		NumEnemies = 0;
 		List<Vector3> blockedcells = new List<Vector3>();
 		level = new int[levelPlan.GetLength(0), levelPlan.GetLength(1)];
 		for(int y=0; y<level.GetLength(0); y++) {
@@ -138,12 +151,14 @@ public class Level : MonoBehaviour
 				}
 				// coin
 				if(q == 7) {
+					NumCoins++;
 					GameObject go = (GameObject)Instantiate(pfCoin);
 					go.transform.parent = this.transform;
 					go.transform.localPosition = pos;
 				}
 				// enemy
 				if(q == 8) {
+					NumEnemies++;
 					GameObject go = (GameObject)Instantiate(pfEnemy);
 					go.transform.parent = this.transform;
 					go.transform.localPosition = pos;

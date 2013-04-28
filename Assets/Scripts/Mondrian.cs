@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Mondrian : MonoBehaviour
+public class Mondrian
 {
+
+	public static Color32 BORDER = new Color32(0,0,0,255);
 	
 	public class Node
 	{
@@ -175,7 +177,7 @@ public class Mondrian : MonoBehaviour
 	static void PaintMondrian(Color32[,] img, Node n)
 	{
 		FillRect(img, n.x1, n.x2, n.y1, n.y2, n.color);
-		DrawRect(img, n.x1, n.x2, n.y1, n.y2, new Color32(0,0,0,255));
+		DrawRect(img, n.x1, n.x2, n.y1, n.y2, BORDER);
 		foreach(Node c in n.children) {
 			PaintMondrian(img, c);
 		}
@@ -187,54 +189,5 @@ public class Mondrian : MonoBehaviour
 		PaintMondrian(c, MondrianGraph(rows, cols));
 		return c;
 	}
-	
-	
-	public static Texture2D CreateTexture(int rows, int cols)
-	{
-		var tex = new Texture2D(rows, cols, TextureFormat.ARGB32, false);
-		tex.filterMode = FilterMode.Point;
-		tex.wrapMode = TextureWrapMode.Clamp;
-		return tex;
-	}
 
-	public static void SetTexture(Texture2D tex, Color32[,] colors)
-	{
-		int rows = colors.GetLength(0);
-		int cols = colors.GetLength(1);
-		Color32[] buff = new Color32[rows*cols];
-		for(int y=0; y<rows; y++) {
-			for(int x=0; x<cols; x++) {
-				buff[x+y*cols] = colors[y,x];
-			}
-		}
-		tex.SetPixels32(buff);
-		tex.Apply();
-	}
-	
-	Texture2D tex;
-	
-	void UpdateMondrian()
-	{
-		int rows = 42;
-		int cols = 42;
-		if(tex == null || tex.width != cols || tex.height != rows) {
-			tex = CreateTexture(rows, cols);
-			renderer.material.mainTexture = tex;
-		}
-		SetTexture(tex, CreateMondrian(rows, cols));
-	}
-	
-	// Use this for initialization
-	void Start()
-	{
-		UpdateMondrian();
-	}
-	
-	// Update is called once per frame
-	void Update()
-	{
-		if(Input.GetMouseButtonDown(1)) {
-			UpdateMondrian();
-		}
-	}
 }

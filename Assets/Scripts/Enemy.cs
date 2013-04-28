@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour {
 	const float ALARM_TIMEOUT = 4.3f;
 
 	BlobMove move;
+	Living life;
 	
 	float goalTime = 0.0f;
 	
@@ -79,15 +80,27 @@ public class Enemy : MonoBehaviour {
 	void Start()
 	{
 		move = this.GetComponent<BlobMove>();
+		life = this.GetComponent<Living>();
 		Globals.BlobManager.AddBlob(gameObject);
 	}
+
+	public bool isKilled = false;
 	
 	void Update()
 	{
 		bombTimeout += MyTime.deltaTime;
 		alarmTimeout += MyTime.deltaTime;
-		move.speed = (IsAlarmed ? VELOCITY_FAST : VELOCITY_SLOW);
-		UpdateGoal();
+		if(life.IsDead) {
+			if(!isKilled) {
+				Globals.Player.NumEnemiesKilled ++;
+				isKilled = true;
+			}
+			move.speed = 0.0f;
+		}
+		else {
+			move.speed = (IsAlarmed ? VELOCITY_FAST : VELOCITY_SLOW);
+			UpdateGoal();
+		}
 	}
 
 }

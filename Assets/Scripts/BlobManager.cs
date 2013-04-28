@@ -51,7 +51,7 @@ public class BlobManager : MonoBehaviour {
 			if(bm) {
 				blobsMove.Remove(bm);
 			}
-			Object.Destroy(x.gameObject);
+			Object.Destroy(x.gameObject, 0.3f);
 		}
 	}
 
