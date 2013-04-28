@@ -130,8 +130,12 @@ public class Mondrian
 			MondrianSplit(n);
 			// remove and add children
 			nodes.Remove(n);
-			closed.Add(n);
-			nodes.AddRange(n.children);
+			if(n.children.Length == 0) {
+				closed.Add(n);
+			}
+			else {
+				nodes.AddRange(n.children);
+			}
 		}
 		// color mondrian
 		int[] colornums = new int[] { 0, 0, 0, 0 };
