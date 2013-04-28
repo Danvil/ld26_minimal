@@ -54,6 +54,10 @@ public class Level : MonoBehaviour
 	}
 	
 	public Collider Collider { get; private set; }
+
+	public int Rows { get { return level.GetLength(0); } }
+
+	public int Cols { get { return level.GetLength(1); } }
 	
 	public bool IsFree(int x, int y)
 	{
@@ -111,9 +115,23 @@ public class Level : MonoBehaviour
 
 	void PlanLevel(Room room)
 	{
-		// FIXME
-		PlanLevelTest2();
+		// create empty room
+		int rows = room.y2 - room.y1;
+		int cols = room.x2 - room.x1;
+		levelPlan = new int[rows,cols];
+		for(int y=0; y<rows; y++) {
+			for(int x=0; x<cols; x++) {
+				levelPlan[y,x] = 0;
+			}
+		}
+		// choose theme
 		ChooseTheme(room.color);
+		// place a coin
+		levelPlan[rows/2,cols/2] = 7;
+		// place player
+		int playerX = LevelManager.PlayerPosX - room.x1;
+		int playerY = LevelManager.PlayerPosY - room.y1;
+		levelPlan[playerY,playerX] = 3;
 	}
 
 	void ChooseTheme(Color theme)

@@ -7,7 +7,6 @@ public class WorldmapPlayer : MonoBehaviour {
 
 	public Worldmap Worldmap;
 
-	int posX, posY;
 	float moveTimeout = 0.0f;
 
 	void Awake()
@@ -21,7 +20,6 @@ public class WorldmapPlayer : MonoBehaviour {
 
 	public void Reposition()
 	{
-		Globals.RoomManager.ComputeStartLocation(out posX, out posY);
 	}
 	
 	void Update()
@@ -29,8 +27,8 @@ public class WorldmapPlayer : MonoBehaviour {
 		moveTimeout += MyTime.deltaTime;
 		if(moveTimeout >= MOVE_TIMEOUT) {
 			moveTimeout = 0.0f;
-			int x = posX;
-			int y = posY;
+			int x = LevelManager.PlayerPosX;
+			int y = LevelManager.PlayerPosY;
 			if(Input.GetKey(KeyCode.A)) {
 				x--;
 			}
@@ -44,11 +42,11 @@ public class WorldmapPlayer : MonoBehaviour {
 				y--;
 			}
 			if(Globals.RoomManager.IsValid(x,y)) {
-				posX = x;
-				posY = y;
+				LevelManager.PlayerPosX = x;
+				LevelManager.PlayerPosY = y;
 			}
-			this.transform.position = new Vector3(posX,posY,-1);
-			Room newRoom = Globals.RoomManager.GetRoom(posX, posY);
+			this.transform.position = new Vector3(LevelManager.PlayerPosX, LevelManager.PlayerPosY,-1);
+			Room newRoom = Globals.RoomManager.GetRoom(LevelManager.PlayerPosX, LevelManager.PlayerPosY);
 			if(newRoom != null && newRoom != Globals.RoomManager.currentRoom) {
 				// ENTER ROOM
 				LevelManager.GotoRoom(newRoom);
@@ -57,7 +55,6 @@ public class WorldmapPlayer : MonoBehaviour {
 		if(Input.GetMouseButtonDown(1)) {
 			Globals.RoomManager.CreateNew();
 			Worldmap.UpdateMondrian();
-			Reposition();
 		}
 	}
 }

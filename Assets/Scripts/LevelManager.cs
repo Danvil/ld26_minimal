@@ -3,6 +3,8 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour {
 
+	static public int PlayerPosX, PlayerPosY;
+
 	static public void GotoRoom(Room room)
 	{
 		Globals.RoomManager.currentRoom = room;
@@ -14,6 +16,8 @@ public class LevelManager : MonoBehaviour {
 
 	static public void GotoWorld()
 	{
+		PlayerPosX = (int)(Globals.Player.transform.position.x) + Globals.RoomManager.currentRoom.x1;
+		PlayerPosY = (int)(Globals.Player.transform.position.y) + Globals.RoomManager.currentRoom.y1;
 		Application.LoadLevel(0);
  	}
 

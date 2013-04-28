@@ -10,6 +10,10 @@ public class Room
 	public Color32 color;
 	public bool isCleared = false;
 
+	public int Width { get { return x2 - 1 - x1; } }
+	
+	public int Height { get { return y2 - 1 - y1; } }
+
 	public bool Inside(int x, int y)
 	{
 		return x1 <= x && x < x2 && y1 <= y && y < y2;
@@ -17,7 +21,7 @@ public class Room
 
 	public int Area()
 	{
-		return (x2 - 1 - x1) * (y2 - 1 - y1);
+		return Width * Height;
 	}
 }
 

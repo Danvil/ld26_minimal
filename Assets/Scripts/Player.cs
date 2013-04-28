@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
 		this.transform.position = new Vector3(
 			Globals.Level.PlayerStart.x,
 			Globals.Level.PlayerStart.y,
-			this.transform.position.z);
+			0.1f);
 	}
 	
 	void Move()
@@ -68,6 +68,20 @@ public class Player : MonoBehaviour {
 			Globals.BombManager.ThrowBomb(start, target);
 		}
 	}
+
+	void UpdateCameraPosition()
+	{
+		const float MARG = 2.5f;
+		float w = (float)(Globals.Level.Cols);
+		float h = (float)(Globals.Level.Rows);
+		float px = this.transform.position.x;
+		float py = this.transform.position.y;
+		if(px < MARG) px = MARG;
+		if(px > w - MARG) px = w - MARG;
+		if(py < MARG) py = MARG;
+		if(py > h - MARG) py = h - MARG;
+		Camera.main.transform.position = new Vector3(px, py, Camera.main.transform.position.z);
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -78,8 +92,7 @@ public class Player : MonoBehaviour {
 			MyTime.Pause = true;
 		}
 		// move camera
-		Vector3 campos = Globals.Level.LevelCenter + 0.4f*(this.transform.position - Globals.Level.LevelCenter);
-		Camera.main.transform.position = new Vector3(campos.x, campos.y, Camera.main.transform.position.z);
+		UpdateCameraPosition();
 		// check for completion
 		if(NumCoinsCollected == Globals.Level.NumCoins && NumEnemiesKilled == Globals.Level.NumEnemies) {
 			// WIN
