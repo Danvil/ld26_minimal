@@ -6,7 +6,10 @@ public class LevelManager : MonoBehaviour {
 	static public void GotoRoom(Room room)
 	{
 		Globals.RoomManager.currentRoom = room;
-		Application.LoadLevel(1);
+		if(!room.isCleared) {
+			room.isCleared = true; // TODO wrong order
+			Application.LoadLevel(1);
+		}
  	}
 
 	static public void GotoWorld()

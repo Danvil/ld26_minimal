@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using MoreLinq;
 
 public class Room
 {
@@ -11,6 +13,11 @@ public class Room
 	public bool Inside(int x, int y)
 	{
 		return x1 <= x && x < x2 && y1 <= y && y < y2;
+	}
+
+	public int Area()
+	{
+		return (x2 - 1 - x1) * (y2 - 1 - y1);
 	}
 }
 
@@ -45,7 +52,9 @@ public class RoomManager
 		colors = Mondrian.CreateMondrian(rows, cols);
 		rooms = CreateRooms();
 		// FIXME find start room
-		currentRoom = rooms[0];
+		currentRoom = rooms
+			.Where(x => RoomManager.SameColor(x.color, Mondrian.WHITE))
+			.MinBy(x => x.Area());
 		currentRoom.isCleared = true;
 	}
 

@@ -56,7 +56,7 @@ public class Worldmap : MonoBehaviour {
 	// 	return tex;
 	// }
 
-	void UpdateMondrian()
+	public void UpdateMondrian()
 	{
 		mondrianTex = CreateTexture(Globals.RoomManager.Colors);
 		highlightTex = ComputeHighlightTexture();
@@ -79,9 +79,5 @@ public class Worldmap : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		if(Input.GetMouseButtonDown(1)) {
-			Globals.RoomManager.CreateNew();
-			UpdateMondrian();
-		}
 	}
 }
