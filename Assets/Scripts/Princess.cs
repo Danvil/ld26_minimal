@@ -4,6 +4,9 @@ using System.Collections;
 public class Princess : MonoBehaviour {
 
 	public AudioClip audioPrincessIn;
+	
+	public GameObject particlesPrincessIn;
+	public GameObject particlesPrincessOut;
 
 	bool pickedUp = false;
 
@@ -25,6 +28,11 @@ public class Princess : MonoBehaviour {
 	void Pickup()
 	{
 		pickedUp = true;
+		GameObject go = (GameObject)Instantiate(particlesPrincessOut);
+		go.transform.parent = this.transform;
+		go.transform.localPosition = Vector3.zero;
+		this.GetComponent<MeshRenderer>().enabled = false;
+		this.GetComponent<SphereCollider>().enabled = false;
 		Globals.SceneTransition.GotoWorld();
 	}
 
@@ -33,6 +41,9 @@ public class Princess : MonoBehaviour {
 		if(!this.gameObject.activeSelf) {
 			this.gameObject.SetActive(true);
 			Globals.Player.audio.PlayOneShot(audioPrincessIn);
+			GameObject go = (GameObject)Instantiate(particlesPrincessIn);
+			go.transform.parent = this.transform;
+			go.transform.localPosition = Vector3.zero;
 		}
 	}
 

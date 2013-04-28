@@ -205,7 +205,7 @@ public class Level : MonoBehaviour
 		else if(RoomManager.SameColor(theme, Mondrian.RED)) {
 			colorLevel = ColorRed;
 			colorCoin = ColorYellow;
-			colorBomb = ColorBlack;
+			colorBomb = ColorWhite;
 			colorEnemy = ColorBlue;
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.BLUE)) {

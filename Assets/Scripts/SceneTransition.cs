@@ -18,7 +18,7 @@ public class SceneTransition : MonoBehaviour {
 	
 	IEnumerator GotoWorldDo()
 	{
-		yield return new WaitForSeconds(1.0F);
+		yield return new WaitForSeconds(1.5F);
 		Globals.IsWorld = true;
 		Application.LoadLevel(0);
 	}
@@ -28,6 +28,7 @@ public class SceneTransition : MonoBehaviour {
 		Globals.Player.audio.PlayOneShot(audioPrincessOut[Random.Range(0,audioPrincessOut.Length-1)]);
 		Globals.PlayerPosX = (int)(Globals.Player.transform.position.x) + Globals.RoomManager.currentRoom.x1;
 		Globals.PlayerPosY = (int)(Globals.Player.transform.position.y) + Globals.RoomManager.currentRoom.y1;
+		Camera.main.GetComponent<Fade>().fadeDir = +1.0f;
 		StartCoroutine(GotoWorldDo());
  	}
 	
