@@ -68,7 +68,7 @@ public class Worldmap : MonoBehaviour {
 		if(Globals.RoomManager == null) {
 			Globals.RoomManager = new RoomManager();
 			UpdateMondrian();
-			Globals.RoomManager.ComputeStartLocation(out LevelManager.PlayerPosX, out LevelManager.PlayerPosY);
+			Globals.RoomManager.ComputeStartLocation(out Globals.PlayerPosX, out Globals.PlayerPosY);
 		}
 		else {
 			UpdateMondrian();

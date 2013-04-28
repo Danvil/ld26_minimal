@@ -95,8 +95,8 @@ public class Player : MonoBehaviour {
 		UpdateCameraPosition();
 		// check for completion
 		if(NumCoinsCollected == Globals.Level.NumCoins && NumEnemiesKilled == Globals.Level.NumEnemies) {
-			// WIN
-			LevelManager.GotoWorld();
+			// show princess
+			Globals.Princess.ShowPrincess();
 		}
 	}
 	

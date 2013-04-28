@@ -27,8 +27,8 @@ public class WorldmapPlayer : MonoBehaviour {
 		moveTimeout += MyTime.deltaTime;
 		if(moveTimeout >= MOVE_TIMEOUT) {
 			moveTimeout = 0.0f;
-			int x = LevelManager.PlayerPosX;
-			int y = LevelManager.PlayerPosY;
+			int x = Globals.PlayerPosX;
+			int y = Globals.PlayerPosY;
 			if(Input.GetKey(KeyCode.A)) {
 				x--;
 			}
@@ -42,14 +42,14 @@ public class WorldmapPlayer : MonoBehaviour {
 				y--;
 			}
 			if(Globals.RoomManager.IsValid(x,y)) {
-				LevelManager.PlayerPosX = x;
-				LevelManager.PlayerPosY = y;
+				Globals.PlayerPosX = x;
+				Globals.PlayerPosY = y;
 			}
-			this.transform.position = new Vector3(LevelManager.PlayerPosX, LevelManager.PlayerPosY,-1);
-			Room newRoom = Globals.RoomManager.GetRoom(LevelManager.PlayerPosX, LevelManager.PlayerPosY);
+			this.transform.position = new Vector3(Globals.PlayerPosX, Globals.PlayerPosY,-1);
+			Room newRoom = Globals.RoomManager.GetRoom(Globals.PlayerPosX, Globals.PlayerPosY);
 			if(newRoom != null && newRoom != Globals.RoomManager.currentRoom) {
 				// ENTER ROOM
-				LevelManager.GotoRoom(newRoom);
+				Globals.SceneTransition.GotoRoom(newRoom);
 			}
 		}
 		if(Input.GetMouseButtonDown(1)) {

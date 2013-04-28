@@ -189,8 +189,8 @@ public class Level : MonoBehaviour
 		}
 		else throw new System.ApplicationException();
 		// place player
-		int playerX = LevelManager.PlayerPosX - room.x1;
-		int playerY = LevelManager.PlayerPosY - room.y1;
+		int playerX = Globals.PlayerPosX - room.x1;
+		int playerY = Globals.PlayerPosY - room.y1;
 		levelPlan[playerY,playerX] = 9;
 	}
 

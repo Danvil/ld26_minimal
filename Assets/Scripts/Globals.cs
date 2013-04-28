@@ -4,6 +4,8 @@ using System.Collections;
 public class Globals
 {
 	
+	static public bool IsWorld = true;
+	
 	static public BombManager BombManager;
 
 	static public BlobManager BlobManager;
@@ -12,6 +14,12 @@ public class Globals
 	
 	static public Level Level;
 
+	static public Princess Princess;
+
 	static public RoomManager RoomManager;
+	
+	static public SceneTransition SceneTransition;
+	
+	static public int PlayerPosX, PlayerPosY;
 
 }
