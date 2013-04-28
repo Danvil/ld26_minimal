@@ -98,7 +98,6 @@ public class Player : MonoBehaviour {
 	void OnGUI()
 	{
 		if(living.IsDead) {
-			Debug.Log("game over");
 			GUI.Label(new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), "Game Over!");
 		}
 	}
