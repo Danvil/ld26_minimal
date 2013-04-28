@@ -369,22 +369,22 @@ public class Level : MonoBehaviour
 		GenerateLights();
 	}
 	
-	int tmp = 0;
+//	int tmp = 0;
 
 	void Update ()
 	{
-		if(Input.GetMouseButtonDown(1)) {
-			tmp = (tmp + 1) % 4;
-			Color32 theme;
-			switch(tmp) {
-				default: case 0: theme = Mondrian.WHITE; break;
-				case 1: theme = Mondrian.RED; break;
-				case 2: theme = Mondrian.BLUE; break;
-				case 3: theme = Mondrian.YELLOW; break;
-			}
-			ChooseTheme(theme);
-			ChangeColors();
-		}
+//		if(Input.GetMouseButtonDown(1)) {
+//			tmp = (tmp + 1) % 4;
+//			Color32 theme;
+//			switch(tmp) {
+//				default: case 0: theme = Mondrian.WHITE; break;
+//				case 1: theme = Mondrian.RED; break;
+//				case 2: theme = Mondrian.BLUE; break;
+//				case 3: theme = Mondrian.YELLOW; break;
+//			}
+//			ChooseTheme(theme);
+//			ChangeColors();
+//		}
 	}
 
 }

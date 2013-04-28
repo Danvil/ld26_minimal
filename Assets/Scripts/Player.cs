@@ -61,12 +61,14 @@ public class Player : MonoBehaviour {
 	{
 		shootTimeout -= MyTime.deltaTime;
 		// shoot and aim with mouse
-		if(Input.GetButton("Fire1") && shootTimeout <= 0) {
+		bool fire1 = Input.GetButton("Fire1");
+		bool fire2 = Input.GetButton("Fire2");
+		if((fire1 || fire2) && shootTimeout <= 0) {
 			shootTimeout = SHOOT_TIMEOUT;
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
 			Vector3 target = ray.GetPoint(- ray.origin.z / ray.direction.z);
 			Vector3 start = this.transform.position + new Vector3(0,0,-0.5f*this.transform.localScale.x -.3f);
-			Globals.BombManager.ThrowBomb(start, target, true);
+			Globals.BombManager.ThrowBomb(start, target, true, fire2);
 		}
 	}
 

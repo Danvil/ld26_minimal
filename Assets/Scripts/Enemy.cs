@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour {
 	public float ALARM_TIMEOUT = 4.3f;
 	
 	public float AimProbability = 1.0f;
+	public float MegaBombProbability = 0.0f;
 	public int NumBombs = 1;
 	public float BombStartHeight = -0.8f;
 
@@ -60,16 +61,17 @@ public class Enemy : MonoBehaviour {
 			if(delta.magnitude < PLAYER_APPROACH_DIST) {
 				move.DisableGoal();
 				// throw grenade
+				bool isMega = (Random.value < MegaBombProbability);
 				if(bombTimeout >= BOMB_TIMEOUT) {
 					if(Random.value < AimProbability) {
 						if(NumBombs == 1) {
-							Globals.BombManager.ThrowBomb(this.transform.position + new Vector3(0,0,BombStartHeight), player_pos, false);
+							Globals.BombManager.ThrowBomb(this.transform.position + new Vector3(0,0,BombStartHeight), player_pos, false, isMega);
 						}
 						else {
 							for(int i=0; i<NumBombs; i++) {
 								float dx = Random.Range(-0.2f, +0.2f);
 								float dy = Random.Range(-0.2f, +0.2f);
-								Globals.BombManager.ThrowBomb(this.transform.position + new Vector3(dx,dy,BombStartHeight), player_pos, false);
+								Globals.BombManager.ThrowBomb(this.transform.position + new Vector3(dx,dy,BombStartHeight), player_pos, false, isMega);
 							}
 						}
 					}
@@ -82,7 +84,7 @@ public class Enemy : MonoBehaviour {
 							Globals.BombManager.ThrowBomb(
 								this.transform.position + new Vector3(0.4f*dx,0.4f*dy,BombStartHeight),
 								this.transform.position + new Vector3(5.0f*dx, 5.0f*dy, 0.0f),
-								false);
+								false, isMega);
 						}
 					}
 					bombTimeout = 0.0f;

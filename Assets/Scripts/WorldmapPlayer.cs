@@ -52,9 +52,9 @@ public class WorldmapPlayer : MonoBehaviour {
 				Globals.SceneTransition.GotoRoom(newRoom);
 			}
 		}
-		if(Input.GetMouseButtonDown(1)) {
-			Globals.RoomManager.CreateNew();
-			Worldmap.UpdateMondrian();
-		}
+//		if(Input.GetMouseButtonDown(1)) {
+//			Globals.RoomManager.CreateNew();
+//			Worldmap.UpdateMondrian();
+//		}
 	}
 }

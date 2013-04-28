@@ -59,9 +59,15 @@ public class BombManager : MonoBehaviour {
 		return explosions.ToArray();
 	}
 	
-	public void ThrowBomb(Vector3 start, Vector3 target, bool isplayer)
+	public void ThrowBomb(Vector3 start, Vector3 target, bool isplayer, bool ismega)
 	{
-		GameObject go = (GameObject)Instantiate(pfBomb);
+		GameObject go;
+		if(ismega) {
+			go = (GameObject)Instantiate(pfMegaBomb);
+		}
+		else {
+			go = (GameObject)Instantiate(pfBomb);
+		}
 		go.transform.parent = this.transform;
 		go.transform.position = start;
 		go.rigidbody.velocity = (target - start).normalized * THROW_VEL;
