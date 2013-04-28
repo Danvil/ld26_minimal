@@ -182,29 +182,45 @@ public class Level : MonoBehaviour
 
 	void GenerateLights()
 	{
-		int rows = level.GetLength(0);
-		int cols = level.GetLength(1);
-		
-		// only place few lights because of limit ...
-		float x1, x2, y1, y2;
-		if(rows < cols) {
-			x1 = 0.25f;
-			x2 = 0.75f;
-			y1 = 0.5f;
-			y2 = 0.5f;
-		}		
-		else {
-			x1 = 0.5f;
-			x2 = 0.5f;
-			y1 = 0.25f;
-			y2 = 0.75f;
+		float w = (float)level.GetLength(1);
+		float h = (float)level.GetLength(0);
+
+		int numW = Mathf.Max(1, Mathf.RoundToInt(w / 5.0f));
+		int numH = Mathf.Max(1, Mathf.RoundToInt(h / 5.0f));
+
+		float dx = w / (float)numW;
+		float dy = h / (float)numH;
+
+		for(int i=0; i<numH; i++) {
+			for(int j=0; j<numW; j++) {
+				float x = dx * (0.5f + (float)j);
+				float y = dy * (0.5f + (float)i);
+				Light go = (Light)Instantiate(pfLight);
+				go.transform.parent = this.transform;
+				go.transform.localPosition = new Vector3(x, y, -3.0f);
+			}
 		}
-		Light go1 = (Light)Instantiate(pfLight);
-		go1.transform.parent = this.transform;
-		go1.transform.localPosition = new Vector3(x1 * (float)cols, y1 * (float)rows, -3.0f);
-		Light go2 = (Light)Instantiate(pfLight);
-		go2.transform.parent = this.transform;
-		go2.transform.localPosition = new Vector3(x2 * (float)cols, y2 * (float)rows, -3.0f);
+		
+		// // only place few lights because of limit ...
+		// float x1, x2, y1, y2;
+		// if(rows < cols) {
+		// 	x1 = 0.25f;
+		// 	x2 = 0.75f;
+		// 	y1 = 0.5f;
+		// 	y2 = 0.5f;
+		// }		
+		// else {
+		// 	x1 = 0.5f;
+		// 	x2 = 0.5f;
+		// 	y1 = 0.25f;
+		// 	y2 = 0.75f;
+		// }
+		// Light go1 = (Light)Instantiate(pfLight);
+		// go1.transform.parent = this.transform;
+		// go1.transform.localPosition = new Vector3(x1 * (float)cols, y1 * (float)rows, -3.0f);
+		// Light go2 = (Light)Instantiate(pfLight);
+		// go2.transform.parent = this.transform;
+		// go2.transform.localPosition = new Vector3(x2 * (float)cols, y2 * (float)rows, -3.0f);
 
 		// // many lights
 		// for(int y=1; y<rows-1; y+=1) {
