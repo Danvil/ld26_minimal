@@ -21,5 +21,7 @@ public class Globals
 	static public SceneTransition SceneTransition;
 	
 	static public int PlayerPosX, PlayerPosY;
+	
+	static public float PlayerSize = 0.5f;
 
 }

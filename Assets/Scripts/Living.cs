@@ -5,6 +5,8 @@ public class Living : MonoBehaviour {
 	
 	const float HEART_ALPHA_DECAY = 0.3f;
 	
+	public float FriendlyFireMult = 1.0f;
+
 	public AudioClip audioHurt;
 	
 	public Material matHealth;
@@ -27,7 +29,7 @@ public class Living : MonoBehaviour {
 			}
 		}
 	}
-	
+
 	float showHeartAlpha = 0.0f;
 	
 	public float HealthMax;

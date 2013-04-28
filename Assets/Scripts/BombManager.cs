@@ -32,7 +32,7 @@ public class BombManager : MonoBehaviour {
 	void Update () {
 	}
 	
-	void DamageLiving(ExplosionSite site)
+	void DamageLiving(ExplosionSite site, Bomb bomb)
 	{
 		foreach(Living x in Globals.BlobManager.GetLifeBehaviours()) {
 			if(Globals.Level.IsPathBlocked(site.position, x.transform.position)) {
@@ -40,7 +40,10 @@ public class BombManager : MonoBehaviour {
 				continue;
 			}
 			float d = (x.transform.position - site.position).magnitude;
-			float dmg = Mathf.Max(0.0f, 12.0f / (1.0f + 1.5f*d*d) - 1.0f);
+			float dmg = Mathf.Max(0.0f, 16.0f / (1.0f + 2.0f*d*d) - 1.5f);
+			if(bomb.IsPlayerBomb == (x == Globals.Player.living)) {
+				dmg *= x.FriendlyFireMult;
+			}
 			if(dmg > 0) {
 				x.Health -= dmg;
 			}
@@ -75,7 +78,7 @@ public class BombManager : MonoBehaviour {
 		site.time = MyTime.time;
 		explosions.Add(site);
 		// damage living
-		DamageLiving(site);
+		DamageLiving(site, bomb);
 	}
 
 }

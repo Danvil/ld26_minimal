@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
 			Globals.Level.PlayerStart.x,
 			Globals.Level.PlayerStart.y,
 			0.1f);
+		this.transform.localScale = new Vector3(Globals.PlayerSize, Globals.PlayerSize, Globals.PlayerSize);
 	}
 	
 	void Move()
@@ -64,7 +65,7 @@ public class Player : MonoBehaviour {
 			shootTimeout = SHOOT_TIMEOUT;
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
 			Vector3 target = ray.GetPoint(- ray.origin.z / ray.direction.z);
-			Vector3 start = this.transform.position + new Vector3(0,0,-.8f);
+			Vector3 start = this.transform.position + new Vector3(0,0,-0.5f*this.transform.localScale.x -.3f);
 			Globals.BombManager.ThrowBomb(start, target, true);
 		}
 	}
@@ -87,6 +88,9 @@ public class Player : MonoBehaviour {
 	{
 		living.HealthMax += 5.0f;
 		living.Health += 5.0f;
+		float growth = 0.20f / this.transform.localScale.x;
+		this.transform.localScale += new Vector3(growth, growth, growth);
+		Globals.PlayerSize = this.transform.localScale.x;
 	}
 	
 	// Update is called once per frame

@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour {
 	public float BOMB_TIMEOUT = 1.7f;
 	public float ALARM_TIMEOUT = 4.3f;
 	
-	public bool AimAtPlayer = true;
+	public float AimProbability = 1.0f;
 	public int NumBombs = 1;
 	public float BombStartHeight = -0.8f;
 
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour {
 				move.DisableGoal();
 				// throw grenade
 				if(bombTimeout >= BOMB_TIMEOUT) {
-					if(AimAtPlayer) {
+					if(Random.value < AimProbability) {
 						if(NumBombs == 1) {
 							Globals.BombManager.ThrowBomb(this.transform.position + new Vector3(0,0,BombStartHeight), player_pos, false);
 						}
