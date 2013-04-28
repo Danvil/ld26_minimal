@@ -13,6 +13,7 @@ public class BombManager : MonoBehaviour {
 	const float THROW_VEL = 4.3f;
 	
 	public GameObject pfBomb;
+	public GameObject pfMegaBomb;
 
 	List<ExplosionSite> explosions = new List<ExplosionSite>();
 	
@@ -40,7 +41,7 @@ public class BombManager : MonoBehaviour {
 				continue;
 			}
 			float d = (x.transform.position - site.position).magnitude;
-			float dmg = Mathf.Max(0.0f, 16.0f / (1.0f + 2.0f*d*d) - 1.5f);
+			float dmg = Mathf.Max(0.0f, bomb.Damage / (1.0f + bomb.DistFalloffStrength*d*d) - 1.5f);
 			if(bomb.IsPlayerBomb == (x == Globals.Player.living)) {
 				dmg *= x.FriendlyFireMult;
 			}

@@ -4,12 +4,15 @@ using System.Collections;
 public class Bomb : MonoBehaviour {
 	
 	public AudioClip audioBump;
-	public AudioClip audioExplosion;
+	public AudioClip[] audioExplosion;
 	
 	public GameObject pfExplosion;
 	
 	public bool IsPlayerBomb = false;
 	
+	public float Damage = 16.0f;
+	public float DistFalloffStrength = 2.0f;
+
 	float age;
 	
 	const float EXPLOSION_DELAY = 3.0f;
@@ -39,7 +42,7 @@ public class Bomb : MonoBehaviour {
 			// notify explosion manager
 			Globals.BombManager.ExplodeBomb(this);
 			// play sound
-			audio.PlayOneShot(audioExplosion);
+			audio.PlayOneShot(audioExplosion[Random.Range(0,audioExplosion.Length)]);
 		}
 	}
 	
