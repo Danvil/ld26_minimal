@@ -6,6 +6,7 @@ public class Level : MonoBehaviour
 {
 	public Light pfLight;
 	public GameObject pfCoin;
+	public GameObject pfPotato;
 	public GameObject pfEnemy;
 	public GameObject pfBoss;
 
@@ -20,6 +21,8 @@ public class Level : MonoBehaviour
 	public Color32 ColorRed		= new Color32(221, 40, 40,255);
 	public Color32 ColorYellow	= new Color32(181,179, 20,255);
 	public Color32 ColorBlack	= new Color32(  0,  0,  0,255);
+	
+	public float potatoProb = 0.05f;
 
 	Color32 colorLevel;
 	Color32 colorCoin;
@@ -314,9 +317,16 @@ public class Level : MonoBehaviour
 				// coin
 				if(q == 7 || q == 15) {
 					NumCoins++;
-					GameObject go = (GameObject)Instantiate(pfCoin);
-					go.transform.parent = this.transform;
-					go.transform.localPosition = pos;
+					if(Random.value < potatoProb) {
+						GameObject go = (GameObject)Instantiate(pfPotato);
+						go.transform.parent = this.transform;
+						go.transform.localPosition = pos;
+					}
+					else {
+						GameObject go = (GameObject)Instantiate(pfCoin);
+						go.transform.parent = this.transform;
+						go.transform.localPosition = pos;
+					}
 				}
 				// enemy
 				if(q == 8 || q == 15) {

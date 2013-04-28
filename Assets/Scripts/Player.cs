@@ -83,6 +83,12 @@ public class Player : MonoBehaviour {
 		Camera.main.transform.position = new Vector3(px, py, Camera.main.transform.position.z);
 	}
 	
+	public void EatPotatoe()
+	{
+		living.HealthMax += 5.0f;
+		living.Health += 5.0f;
+	}
+	
 	// Update is called once per frame
 	void Update () {
 		Move();

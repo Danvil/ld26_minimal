@@ -5,6 +5,8 @@ public class Princess : MonoBehaviour {
 
 	public AudioClip audioPrincessIn;
 	
+	public float PrincessHeal = 2.5f;
+	
 	public GameObject particlesPrincessIn;
 	public GameObject particlesPrincessOut;
 
@@ -28,11 +30,18 @@ public class Princess : MonoBehaviour {
 	void Pickup()
 	{
 		pickedUp = true;
+		
+		// player health up
+		Globals.Player.living.Health += PrincessHeal;
+		
+		// particle effect
 		GameObject go = (GameObject)Instantiate(particlesPrincessOut);
 		go.transform.parent = this.transform;
 		go.transform.localPosition = Vector3.zero;
+		
 		this.GetComponent<MeshRenderer>().enabled = false;
 		this.GetComponent<SphereCollider>().enabled = false;
+		
 		Globals.SceneTransition.GotoWorld();
 	}
 
