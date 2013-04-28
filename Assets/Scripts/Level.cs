@@ -113,6 +113,31 @@ public class Level : MonoBehaviour
 		ChooseTheme(Mondrian.WHITE);
 	}
 
+	void PlanShapes()
+	{
+		LevelShapePlacer.Place(levelPlan);
+	}
+
+	void PlanCoins(int mult)
+	{
+		int d = 4 - 3;
+		int rows = levelPlan.GetLength(0);
+		int cols = levelPlan.GetLength(1);
+		for(int y=0; y<rows; y+=d) {
+			levelPlan[y,     0] = 7;
+			levelPlan[y,cols-1] = 7;
+		}
+		for(int x=0; x<cols; x+=d) {
+			levelPlan[0     , x] = 7;
+			levelPlan[rows-1, x] = 7;
+		}
+	}
+
+	void PlanEnemies(float mult)
+	{
+		
+	}
+
 	void PlanLevel(Room room)
 	{
 		// create empty room
@@ -125,9 +150,29 @@ public class Level : MonoBehaviour
 			}
 		}
 		// choose theme
-		ChooseTheme(room.color);
-		// place a coin
-		levelPlan[rows/2,cols/2] = 7;
+		Color32 theme = room.color;
+		ChooseTheme(theme);
+		// place stuff
+		if(RoomManager.SameColor(theme, Mondrian.WHITE)) {
+			PlanShapes();
+			PlanCoins(2);
+			PlanEnemies(1);
+		}
+		else if(RoomManager.SameColor(theme, Mondrian.RED)) {
+			PlanShapes();
+			PlanCoins(2);
+			PlanEnemies(2);
+		}
+		else if(RoomManager.SameColor(theme, Mondrian.BLUE)) {
+			PlanShapes();
+			PlanCoins(1);
+			PlanEnemies(.5f);
+		}
+		else if(RoomManager.SameColor(theme, Mondrian.YELLOW)) {
+			PlanShapes();
+			PlanCoins(3);
+		}
+		else throw new System.ApplicationException();
 		// place player
 		int playerX = LevelManager.PlayerPosX - room.x1;
 		int playerY = LevelManager.PlayerPosY - room.y1;
