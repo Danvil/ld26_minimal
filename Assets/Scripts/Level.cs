@@ -143,18 +143,28 @@ public class Level : MonoBehaviour
 		}
 	}
 
-	void PlanCoins(int mult)
+	void PlanCoins(int mult, int minpotatoes)
 	{
 		int d = 4 - mult;
 		int rows = levelPlan.GetLength(0);
 		int cols = levelPlan.GetLength(1);
+		List<Loc> locs = new List<Loc>();
 		for(int y=0; y<rows; y+=d) {
 			levelPlan[y,     0] += 7;
 			levelPlan[y,cols-1] += 7;
+			locs.Add(new Loc(0,y));
+			locs.Add(new Loc(cols-1,y));
 		}
 		for(int x=0; x<cols; x+=d) {
 			levelPlan[0     , x] += 7;
 			levelPlan[rows-1, x] += 7;
+			locs.Add(new Loc(x,0));
+			locs.Add(new Loc(x,rows-1));
+		}
+		for(int i=0; i<minpotatoes; i++) {
+			Loc u = locs[Random.Range(0,locs.Count)];
+			levelPlan[u.y, u.x] += 100;
+			locs.Remove(u);
 		}
 	}
 
@@ -177,22 +187,22 @@ public class Level : MonoBehaviour
 		if(RoomManager.SameColor(theme, Mondrian.WHITE)) {
 			PlanShapes(isboss);
 			PlanEnemies(room.Area, 1.0f);
-			PlanCoins(1);
+			PlanCoins(1, 0);
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.RED)) {
 			PlanShapes(isboss);
 			PlanEnemies(room.Area, 1.8f);
-			PlanCoins(2);
+			PlanCoins(2, 1);
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.BLUE)) {
 			PlanShapes(isboss);
 			PlanEnemies(room.Area, 0.5f);
-			PlanCoins(1);
+			PlanCoins(1, 0);
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.YELLOW)) {
 			PlanShapes(isboss);
 			PlanEnemies(room.Area, 0.2f);
-			PlanCoins(3);
+			PlanCoins(3, 1);
 		}
 		else throw new System.ApplicationException();
 		// place player
@@ -317,9 +327,14 @@ public class Level : MonoBehaviour
 					blockedcells.Add(pos);
 				}
 				// coin
+				bool ispotato = false;
+				if(q > 100) {
+					ispotato = true;
+					q -= 100;
+				}
 				if(q == 7 || q == 15) {
 					NumCoins++;
-					if(Random.value < potatoProb) {
+					if(Random.value < potatoProb || ispotato) {
 						GameObject go = (GameObject)Instantiate(pfPotato);
 						go.transform.parent = this.transform;
 						go.transform.localPosition = pos;
