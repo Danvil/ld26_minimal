@@ -5,7 +5,7 @@ public class Princess : MonoBehaviour {
 
 	public AudioClip audioPrincessIn;
 	
-	public float PrincessHeal = 2.5f;
+	public float PrincessHeal = 5.0f;
 	
 	public GameObject particlesPrincessIn;
 	public GameObject particlesPrincessOut;
