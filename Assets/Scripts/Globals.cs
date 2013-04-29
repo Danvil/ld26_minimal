@@ -25,5 +25,7 @@ public class Globals
 	static public float PlayerSize = 0.5f;
 	
 	static public int NumMegaBombs = 0;
+	
+	static public bool ShowTutorial = true;
 
 }
