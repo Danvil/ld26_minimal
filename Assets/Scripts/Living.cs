@@ -3,13 +3,11 @@ using System.Collections;
 
 public class Living : MonoBehaviour {
 	
-	const float HEART_ALPHA_DECAY = 0.3f;
-	
 	public float FriendlyFireMult = 1.0f;
 
 	public AudioClip audioHurt;
 	
-	public Material matHealth;
+	public float HealthMax;
 	
 	private float health;
 	
@@ -25,34 +23,25 @@ public class Living : MonoBehaviour {
 				if(health <= 0.0f) {
 					IsDead = true;
 				}
-				showHeartAlpha = 1.0f;
+				healthbar.Percentage = health / HealthMax;
 			}
 		}
 	}
 
-	float showHeartAlpha = 0.0f;
-	
-	public float HealthMax;
-	
 	public bool IsDead { get; private set; }
 	
-	Material mat;
+	private Healthbar healthbar;
 	
 	// Use this for initialization
 	void Start () {
+		healthbar = this.transform.FindChild("Healthbar").gameObject.GetComponent<Healthbar>();
 		IsDead = false;
-		Health = HealthMax;
-		showHeartAlpha = 0.0f;
-		
-		mat = (Material)Instantiate(matHealth);
-		GameObject go = this.transform.FindChild("obj/player/health").gameObject;
-		go.renderer.material = mat;
+		Health = HealthMax;	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		showHeartAlpha -= MyTime.deltaTime * HEART_ALPHA_DECAY;
 		float p = Health / HealthMax;
-		mat.SetColor("_TintColor", new Color(p, 0.0f, 0.0f, Mathf.Clamp01(showHeartAlpha)));
+		healthbar.Percentage = p;
 	}
 }
