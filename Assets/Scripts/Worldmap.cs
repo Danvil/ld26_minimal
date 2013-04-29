@@ -69,6 +69,8 @@ public class Worldmap : MonoBehaviour {
 			Globals.RoomManager = new RoomManager();
 			UpdateMondrian();
 			Globals.RoomManager.ComputeStartLocation(out Globals.PlayerPosX, out Globals.PlayerPosY);
+			// directly go to play
+			Globals.SceneTransition.GotoRoom(Globals.RoomManager.currentRoom);
 		}
 		else {
 			UpdateMondrian();

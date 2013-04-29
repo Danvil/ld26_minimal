@@ -59,7 +59,7 @@ public class RoomManager
 		currentRoom = rooms
 			.Where(x => RoomManager.SameColor(x.color, Mondrian.WHITE))
 			.MinBy(x => x.Area);
-		currentRoom.isCleared = true;
+		currentRoom.isCleared = false;
 	}
 
 	public void ComputeStartLocation(out int x, out int y)

@@ -41,7 +41,7 @@ public class BombManager : MonoBehaviour {
 				continue;
 			}
 			float d = (x.transform.position - site.position).magnitude;
-			float dmg = Mathf.Max(0.0f, bomb.Damage / (1.0f + bomb.DistFalloffStrength*d*d) - 1.5f);
+			float dmg = bomb.ComputeDamage(d);
 			if(bomb.IsPlayerBomb == (x == Globals.Player.living)) {
 				dmg *= x.FriendlyFireMult;
 			}

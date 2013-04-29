@@ -87,12 +87,26 @@ public class Player : MonoBehaviour {
 			movedir += new Vector3(0,-1,0);
 		}
 		if(movedir.magnitude > 0.0f) {
+			float r = Mathf.Min(0.45f, PLAYER_RADIUS*this.transform.localScale.x);
 			movedir = movedir.normalized * PLAYER_VELOCITY * MyTime.deltaTime;
 			Vector3 newpos = this.transform.position + movedir;
-			if(!Globals.Level.IsBlocking(newpos, PLAYER_RADIUS)) {
+			if(!Globals.Level.IsBlocking(newpos, r)) {
 				this.transform.position = newpos;
 			}
+			else {
+				newpos = this.transform.position + movedir.WithChangedX(0.0f);
+				if(!Globals.Level.IsBlocking(newpos, r)) {
+					this.transform.position = newpos;
+				}
+				else {
+					newpos = this.transform.position + movedir.WithChangedY(0.0f);
+					if(!Globals.Level.IsBlocking(newpos, r)) {
+						this.transform.position = newpos;
+					}
+				}
+			}
 		}
+		this.transform.position = this.transform.position.WithChangedZ(0);
 	}
 	
 	void Shoot()
@@ -133,7 +147,7 @@ public class Player : MonoBehaviour {
 	
 	public void EatPotatoe()
 	{
-		living.HealthMax += 5.0f;
+		living.HealthMax += 5.00f;
 		living.Health += 5.0f;
 		float growth = 0.20f / this.transform.localScale.x;
 		this.transform.localScale += new Vector3(growth, growth, growth);

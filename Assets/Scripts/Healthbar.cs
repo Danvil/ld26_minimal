@@ -12,11 +12,10 @@ public class Healthbar : MonoBehaviour {
 	public float Percentage = 1.0f;
 	
 	Mesh mesh;	
-	float currentP = -1.0f;
+	float currentP = 1.0f;
 	
 	static void UpdateMesh(Mesh mesh, float p)
 	{
-		Debug.Log("Health" + p);
 		mesh.vertices = new Vector3[] {
 			new Vector3(0,0,0),
 			new Vector3(1,0,0),
@@ -45,6 +44,11 @@ public class Healthbar : MonoBehaviour {
 	
 	float showHeartAlpha = 0.0f;
 	
+	public void ShowHeart()
+	{
+		showHeartAlpha = 1.0f;
+	}	
+	
 	void Start()
 	{
 		mesh = new Mesh();
@@ -65,7 +69,7 @@ public class Healthbar : MonoBehaviour {
 	{
 		float p = Mathf.Clamp01(Percentage);
 		if(p != currentP) {
-			showHeartAlpha = 1.0f;
+			ShowHeart();
 			currentP = p;
 			UpdateMesh(mesh, p);
 			GetComponent<MeshFilter>().mesh = mesh;

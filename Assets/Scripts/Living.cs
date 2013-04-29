@@ -24,13 +24,14 @@ public class Living : MonoBehaviour {
 					IsDead = true;
 				}
 				healthbar.Percentage = health / HealthMax;
+				healthbar.ShowHeart();
 			}
 		}
 	}
 
 	public bool IsDead { get; private set; }
 	
-	private Healthbar healthbar;
+	public Healthbar healthbar;
 	
 	// Use this for initialization
 	void Start () {

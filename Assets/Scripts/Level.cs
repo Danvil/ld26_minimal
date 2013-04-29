@@ -125,7 +125,7 @@ public class Level : MonoBehaviour
 
 	void PlanEnemies(int area, float mul)
 	{
-		int num = MoreMath.RandomRound((float)(area) * mul / 10.0f);
+		int num = MoreMath.RandomRound((float)(area) * mul / 12.0f);
 		List<Loc> locs = LevelShapePlacer.GetFreeLocations(levelPlan).Randomize().ToList();
 		int numfree = locs.Count;
 		int k = 0;
