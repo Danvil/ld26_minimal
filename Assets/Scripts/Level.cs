@@ -77,6 +77,7 @@ public class Level : MonoBehaviour
 	
 	public bool IsBlocking(Vector3 v)
 	{
+		if(v.x < 0 || v.y < 0) return true;
 		return IsBlocking((int)v.x, (int)v.y);
 	}
 	
@@ -190,6 +191,7 @@ public class Level : MonoBehaviour
 		}
 		else if(RoomManager.SameColor(theme, Mondrian.YELLOW)) {
 			PlanShapes(isboss);
+			PlanEnemies(room.Area, 0.2f);
 			PlanCoins(3);
 		}
 		else throw new System.ApplicationException();

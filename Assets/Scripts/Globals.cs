@@ -23,5 +23,7 @@ public class Globals
 	static public int PlayerPosX, PlayerPosY;
 	
 	static public float PlayerSize = 0.5f;
+	
+	static public int NumMegaBombs = 0;
 
 }

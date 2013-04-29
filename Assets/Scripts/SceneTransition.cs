@@ -5,6 +5,8 @@ public class SceneTransition : MonoBehaviour {
 
 	public AudioClip audioLanding;
 	public AudioClip[] audioPrincessOut;
+	public AudioClip audioWin;
+	public AudioClip audioLoose;
 
 	public void GotoRoom(Room room)
 	{
@@ -32,11 +34,42 @@ public class SceneTransition : MonoBehaviour {
 		StartCoroutine(GotoWorldDo());
  	}
 	
+	bool isWin = false;
+	bool isLoose = false;
+	
+	public void Win()
+	{
+		if(isWin || isLoose) return;
+		MyTime.Pause = true;
+		Globals.Player.audio.PlayOneShot(audioWin);
+		Debug.Log("WIN");
+		isWin = true;
+	}
+	
+	public void Loose()
+	{
+		if(isLoose || isLoose) return;
+		MyTime.Pause = true;
+		Globals.Player.audio.PlayOneShot(audioLoose);
+		Debug.Log("LOOSE");
+		isLoose = true;
+	}
+	
 	void Awake()
 	{
 		Globals.SceneTransition = this;
 	}
 
+	void OnGUI()
+	{
+		if(isLoose) {
+			GUI.Label(new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), "Game Over!");
+		}
+		if(isWin) {
+			GUI.Label(new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), "You have won the game!");
+		}
+	}
+	
 	void Start()
 	{
 		if(!Globals.IsWorld) {

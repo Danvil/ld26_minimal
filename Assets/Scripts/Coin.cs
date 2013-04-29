@@ -22,7 +22,7 @@ public class Coin : MonoBehaviour {
 		pickedUp = true;
 		Globals.Player.audio.PlayOneShot(audioCoin[Random.Range(0,audioCoin.Length-1)]);
 		Object.Destroy(this.gameObject);
-		Globals.Player.NumCoinsCollected ++;
+		Globals.Player.OnPickupCoin();
 	}
 	
 	void OnCollisionEnter(Collision collision)

@@ -53,6 +53,20 @@ public class Princess : MonoBehaviour {
 			GameObject go = (GameObject)Instantiate(particlesPrincessIn);
 			go.transform.parent = this.transform;
 			go.transform.localPosition = Vector3.zero;
+			
+			// place near player
+			float R1 = 1.5f;
+			float R2 = 2.0f;
+			while(true) {
+				float phi = Random.Range(0.0f, 360.0f);
+				float r = Random.Range(R1, R2);
+				Vector3 pos = Globals.Player.transform.position + new Vector3(r*Mathf.Cos(phi), r*Mathf.Sin(phi), 0.0f);
+				pos = pos.WithChangedZ(0.0f);
+				if(!Globals.Level.IsBlocking(pos)) {
+					this.transform.position = pos;
+					break;
+				}
+			}
 		}
 	}
 

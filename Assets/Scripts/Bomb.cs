@@ -15,7 +15,7 @@ public class Bomb : MonoBehaviour {
 
 	float age;
 	
-	const float EXPLOSION_DELAY = 3.0f;
+	public float EXPLOSION_DELAY = 3.0f;
 	const float AUDIO_BUMP_DELAY = 0.3f;
 
 	float audioBumpDelay = 0.0f;

@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour {
 	public float MegaBombProbability = 0.0f;
 	public int NumBombs = 1;
 	public float BombStartHeight = -0.8f;
+	
+	public bool IsBoss = false;
 
 	BlobMove move;
 	Living life;
@@ -52,7 +54,7 @@ public class Enemy : MonoBehaviour {
 		}
 		// go to player
 		Vector3 player_pos = Globals.Player.transform.position;
-		if(!Globals.Level.IsPathBlocked(this.transform.position, player_pos)) {
+		if(!Globals.Level.IsPathBlocked(this.transform.position, player_pos) && (player_pos - this.transform.position).magnitude <= 5.0f) {
 			move.PlayerMinDistance = PLAYER_APPROACH_DIST;
 			hasLastPlayerPos = true;
 			lastPlayerPos = player_pos;
